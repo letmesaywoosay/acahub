@@ -320,11 +320,7 @@ const academyData = {
   ],
   "downloads": [
     {
-      "name": "CONTRABASS 3.0.5",
-      "url": ""
-    },
-    {
-      "name": "CONTRABASS 3.0.4",
+      "name": "[07.14] CONTRABASS 소개 및 기능 교육",
       "url": ""
     }
   ],
