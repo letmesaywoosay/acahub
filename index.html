@@ -618,12 +618,31 @@
 
       <!-- 5. Downloads Section -->
       <div class="dashboard-card">
-        <div class="card-title">
+        <div class="card-title" style="margin-bottom: 1.5rem;">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
           교육 교재 및 실습자료 다운로드
         </div>
-        <div class="download-grid" id="user-download-list">
-          <!-- Dynamically populated -->
+        
+        <!-- 5.1. 교육교재 다운로드 서브섹션 -->
+        <div style="margin-bottom: 2rem;">
+          <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 4px; height: 16px; background-color: var(--primary); border-radius: 2px; display: inline-block;"></span>
+            교육 교재 다운로드
+          </div>
+          <div class="download-grid" id="user-download-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+        
+        <!-- 5.2. 실습자료 다운로드 서브섹션 -->
+        <div>
+          <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 4px; height: 16px; background-color: var(--accent); border-radius: 2px; display: inline-block;"></span>
+            실습 자료 다운로드
+          </div>
+          <div class="download-grid" id="user-practice-list">
+            <!-- Dynamically populated -->
+          </div>
         </div>
       </div>
 
@@ -942,6 +961,35 @@
           `;
           dlGrid.appendChild(item);
         });
+      }
+
+      // 6-2) Practice Materials List (Always active links)
+      const pmGrid = document.getElementById('user-practice-list');
+      if (pmGrid) {
+        pmGrid.innerHTML = '';
+        if (!appState.practiceMaterials || appState.practiceMaterials.length === 0) {
+          pmGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 1.5rem;">등록된 실습 자료가 없습니다.</div>`;
+        } else {
+          appState.practiceMaterials.forEach(pm => {
+            const item = document.createElement('div');
+            item.className = 'download-card-item';
+            item.innerHTML = `
+              <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; gap: 0.75rem;">
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span class="date-badge active">실습 자료</span>
+                  </div>
+                  <div style="font-weight: 600; font-size: 0.95rem; line-height: 1.4; color: var(--text-primary);">${escapeHTML(pm.name)}</div>
+                </div>
+                <a href="${escapeHTML(pm.url)}" target="_blank" class="download-btn" style="text-decoration: none; background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%); border-color: var(--accent);">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  다운로드
+                </a>
+              </div>
+            `;
+            pmGrid.appendChild(item);
+          });
+        }
       }
 
       // 7) 초기 드롭다운 경고 하이라이트 상태 반영

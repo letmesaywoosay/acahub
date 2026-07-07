@@ -330,6 +330,12 @@ const academyData = {
       "url": "www.naver.com"
     }
   ],
+  "practiceMaterials": [
+    {
+      "name": "CONTRABASS",
+      "url": "https://okekr-my.sharepoint.com/:u:/g/personal/ws_choi_okekr_onmicrosoft_com/IQDvfs5bsBxIQI9mz5hSAogxAT1VljI4jPHipTx4Woj0a8Q?e=4STXbE"
+    }
+  ],
   "tromboneServices": [
     {
       "no": 0,

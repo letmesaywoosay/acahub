@@ -55,6 +55,7 @@ function parseExcel(triggerPush = false) {
       solutions: [],
       vpnAccounts: [],
       downloads: [],
+      practiceMaterials: [],
       tromboneServices: [],
       middlewares: []
     };
@@ -188,6 +189,20 @@ function parseExcel(triggerPush = false) {
             dateStr = formatExcelDate(rawDate);
           }
           academyData.downloads.push({ date: dateStr, name, url });
+        }
+      });
+    }
+
+    // 4-2. 실습자료 다운로드 시트 파싱
+    const pmSheet = workbook.Sheets['실습자료 다운로드'];
+    if (pmSheet) {
+      const rows = XLSX.utils.sheet_to_json(pmSheet, { header: 1, defval: "" });
+      rows.forEach((row, idx) => {
+        if (idx < 1) return;
+        const name = String(row[0] || "").trim();
+        const url = String(row[1] || "").trim();
+        if (name !== "") {
+          academyData.practiceMaterials.push({ name, url });
         }
       });
     }
