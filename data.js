@@ -320,12 +320,12 @@ const academyData = {
   ],
   "downloads": [
     {
-      "name": "CONTRABASS 3.0.4",
+      "name": "CONTRABASS 3.0.5",
       "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZk_NHCSbEhRGFRXeglJQnU?e=4B7DPD"
     },
     {
-      "name": "NAVER",
-      "url": "https://naver.com"
+      "name": "CONTRABASS 3.0.4",
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZk_NHCSbEhRGFRXeglJQnU?e=4B7DPD"
     }
   ],
   "tromboneServices": [
