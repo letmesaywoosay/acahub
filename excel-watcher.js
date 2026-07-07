@@ -16,6 +16,23 @@ console.log('출력 파일:', OUTPUT_FILE);
 
 function formatExcelDate(val) {
   if (!val) return "";
+  const num = Number(val);
+  
+  // 엑셀 날짜 일련번호 범위인 경우 (예: 46210)
+  if (!isNaN(num) && num > 40000 && num < 60000) {
+    const utc_days  = Math.floor(num - 25569);
+    const utc_value = utc_days * 86400;
+    const date_info = new Date(utc_value * 1000);
+    // 타임존 보정 (KST 현지 표준시 기준)
+    const tzOffset = date_info.getTimezoneOffset() * 60 * 1000;
+    const local_date = new Date(date_info.getTime() + tzOffset);
+    
+    const yyyy = local_date.getFullYear();
+    const mm = String(local_date.getMonth() + 1).padStart(2, '0');
+    const dd = String(local_date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
   const s = String(val).trim();
   if (s.length === 6 && /^\d+$/.test(s)) {
     // "260714" -> "2026-07-14"
@@ -282,10 +299,14 @@ function autoGitPush() {
 // 최초 1회 실행 (푸시 없음)
 parseExcel(false);
 
-// 엑셀 파일 실시간 감시 시작
+// 엑셀 파일 실시간 감시 시작 (숨김 파일 및 엑셀 임시파일 ~$ 무시)
 const watcher = chokidar.watch(EXCEL_FILE, {
   persistent: true,
-  ignoreInitial: true
+  ignoreInitial: true,
+  ignored: [
+    /(^|[\/\\])\../,
+    /~\$/
+  ]
 });
 
 watcher.on('change', () => {

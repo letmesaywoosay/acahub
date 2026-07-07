@@ -318,7 +318,18 @@ const academyData = {
       "pw": "vw1W7i48l47Y"
     }
   ],
-  "downloads": [],
+  "downloads": [
+    {
+      "date": "2026-07-07",
+      "name": "CONTRABASS 소개 및 기능 교육",
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZHa4XD-fplaymi5dzaKtcI?e=yoDIYd"
+    },
+    {
+      "date": "2026-07-15",
+      "name": "VIOLA 소개 및 기능 교육",
+      "url": "www.naver.com"
+    }
+  ],
   "tromboneServices": [
     {
       "no": 0,
