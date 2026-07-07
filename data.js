@@ -320,7 +320,7 @@ const academyData = {
   ],
   "downloads": [
     {
-      "date": "2026-07-07",
+      "date": "2026-07-14",
       "name": "CONTRABASS 소개 및 기능 교육",
       "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZHa4XD-fplaymi5dzaKtcI?e=yoDIYd"
     },
