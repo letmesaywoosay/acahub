@@ -286,7 +286,16 @@ const academyData = {
       "pw": "vw1W7i48l47Y"
     }
   ],
-  "downloads": [],
+  "downloads": [
+    {
+      "name": "CONTRABASS 3.0.4",
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZk_NHCSbEhRGFRXeglJQnU?e=4B7DPD"
+    },
+    {
+      "name": "NAVER",
+      "url": "https://naver.com"
+    }
+  ],
   "tromboneServices": [
     {
       "no": 0,
