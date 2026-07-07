@@ -13,7 +13,7 @@ console.log('==================================================');
 console.log('감시 파일:', EXCEL_FILE);
 console.log('출력 파일:', OUTPUT_FILE);
 
-function parseExcel() {
+function parseExcel(triggerPush = false) {
   if (!fs.existsSync(EXCEL_FILE)) {
     console.error('오류: 엑셀 파일이 존재하지 않습니다.');
     return;
@@ -222,13 +222,38 @@ if (typeof module !== 'undefined' && module.exports) {
     fs.writeFileSync(OUTPUT_FILE, jsContent, 'utf8');
     console.log(`[${new Date().toLocaleTimeString()}] ✓ data.js 업데이트 완료 (솔루션: ${academyData.solutions.length}개, 미들웨어: ${academyData.middlewares.length}개, 다운로드: ${academyData.downloads.length}개)`);
 
+    // 변경 사항이 있을 때 깃허브 및 Vercel 실시간 배포 동기화 실행
+    if (triggerPush) {
+      autoGitPush();
+    }
+
   } catch (err) {
     console.error('엑셀 파싱 중 에러 발생:', err.message);
   }
 }
 
-// 최초 1회 실행
-parseExcel();
+let isPushing = false;
+function autoGitPush() {
+  if (isPushing) {
+    console.log('⚠️ 현재 GitHub 동기화가 진행 중입니다. 대기해 주세요.');
+    return;
+  }
+  isPushing = true;
+  console.log('🚀 [GitHub & Vercel] 실시간 배포 동기화(Git Push)를 진행합니다...');
+  
+  const { exec } = require('child_process');
+  exec('git add data.js && git commit -m "Auto-update data.js from Excel" && git push', (err, stdout, stderr) => {
+    isPushing = false;
+    if (err) {
+      console.error('❌ Git push 동기화 실패:', err.message);
+      return;
+    }
+    console.log('✓ [GitHub & Vercel] 실시간 동기화 완료! (Vercel이 백그라운드 배포를 진행 중입니다.)');
+  });
+}
+
+// 최초 1회 실행 (푸시 없음)
+parseExcel(false);
 
 // 엑셀 파일 실시간 감시 시작
 const watcher = chokidar.watch(EXCEL_FILE, {
@@ -237,9 +262,8 @@ const watcher = chokidar.watch(EXCEL_FILE, {
 });
 
 watcher.on('change', () => {
-  console.log('엑셀 파일 변경이 감지되었습니다. 재파싱을 진행합니다...');
-  // 엑셀 편집 중 저장 시 일시적인 파일 락(EBUSY) 대비 딜레이 적용
-  setTimeout(parseExcel, 500);
+  console.log('엑셀 파일 변경이 감지되었습니다. 재파싱 및 실시간 배포를 진행합니다...');
+  setTimeout(() => parseExcel(true), 500);
 });
 
 watcher.on('error', error => console.error('감시 오류 발생:', error));
