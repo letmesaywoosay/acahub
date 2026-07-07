@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="50%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <!-- Background Glow -->
+  <rect width="48" height="48" rx="14" fill="#0F172A" />
+  
+  <!-- Graduation Cap (Masterfully Crafted) -->
+  <g filter="url(#glow)">
+    <!-- Diamond cap top -->
+    <path d="M24 9L41 17L24 25L7 17Z" fill="url(#grad)" />
+    <!-- Cap base -->
+    <path d="M15 21.5V27.5C15 31.5 19 33.5 24 33.5C29 33.5 33 31.5 33 27.5V21.5L24 25.5L15 21.5Z" fill="url(#grad)" opacity="0.85" />
+    <!-- Tassel string -->
+    <path d="M24 17L35.5 22.5V27.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+    <!-- Tassel brush -->
+    <path d="M34.25 27.5H36.75V30H34.25Z" fill="#06B6D4" />
+    
+    <!-- Open Book underneath as support -->
+    <path d="M12 36C18 34 24 37 24 37C24 37 30 34 36 36V39C30 37 24 40 24 40C24 40 18 37 12 39V36Z" fill="url(#grad)" />
+    <path d="M24 37V40" stroke="#0F172A" stroke-width="1" />
+  </g>
+</svg>

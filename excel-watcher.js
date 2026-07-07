@@ -1,0 +1,245 @@
+const fs = require('fs');
+const path = require('path');
+const chokidar = require('chokidar');
+const XLSX = require('xlsx');
+
+// 엑셀 파일 및 빌드 출력 대상 설정
+const EXCEL_FILE = path.join(__dirname, '솔루션실습 접속정보 관리.xlsx');
+const OUTPUT_FILE = path.join(__dirname, 'data.js');
+
+console.log('==================================================');
+console.log('  ACADEMY Hub Excel Watcher 기동 (Trainee View)');
+console.log('==================================================');
+console.log('감시 파일:', EXCEL_FILE);
+console.log('출력 파일:', OUTPUT_FILE);
+
+function parseExcel() {
+  if (!fs.existsSync(EXCEL_FILE)) {
+    console.error('오류: 엑셀 파일이 존재하지 않습니다.');
+    return;
+  }
+
+  try {
+    const workbook = XLSX.readFile(EXCEL_FILE);
+    const academyData = {
+      wifi: { ssid: "okestro_guest", pw: "Okguest!@" },
+      attendance: { url: "", qr: "" },
+      solutions: [],
+      vpnAccounts: [],
+      downloads: [],
+      tromboneServices: [],
+      middlewares: []
+    };
+
+    // 1. 기본정보 시트 파싱
+    const infoSheet = workbook.Sheets['기본정보'];
+    if (infoSheet) {
+      const rows = XLSX.utils.sheet_to_json(infoSheet, { header: 1, defval: "" });
+      
+      // 와이파이 정보 (1행 SSID, 2행 PW)
+      if (rows[1] && rows[1][1]) academyData.wifi.ssid = String(rows[1][1]).trim();
+      if (rows[2] && rows[2][1]) academyData.wifi.pw = String(rows[2][1]).trim();
+      
+      // 출석체크 링크 & QR 코드 검색 (A열 키워드 매칭)
+      rows.forEach(row => {
+        const key = String(row[0] || "").trim().toUpperCase();
+        if (key.includes("URL") || key.includes("출석체크 바로가기")) {
+          academyData.attendance.url = String(row[1] || "").trim();
+        }
+        if (key.includes("QR") || key.includes("코드")) {
+          academyData.attendance.qr = String(row[1] || "").trim();
+        }
+      });
+    }
+
+    // 2. 솔루션 접속 정보 시트 파싱
+    const solSheet = workbook.Sheets['솔루션 접속 정보'];
+    const adminSheet = workbook.Sheets['(관리자)솔루션 접속 정보'];
+    const hostMap = {};
+
+    if (adminSheet) {
+      const adminRows = XLSX.utils.sheet_to_json(adminSheet, { header: 1, defval: "" });
+      adminRows.forEach((row, idx) => {
+        if (idx < 1) return;
+        const name = String(row[0] || "").trim();
+        const host = String(row[3] || "").trim();
+        if (name !== "" && host !== "") {
+          hostMap[name] = host;
+        }
+      });
+    }
+
+    if (solSheet) {
+      const rows = XLSX.utils.sheet_to_json(solSheet, { header: 1, defval: "" });
+      let currentSolName = "";
+      let currentPw = "";
+      let currentUrl = "";
+      
+      rows.forEach((row, idx) => {
+        if (idx < 1) return; // 헤더 스킵
+        const solName = String(row[1] || "").trim();
+        const studentId = String(row[2] || "").trim();
+        const studentPw = String(row[3] || "").trim();
+        const url = String(row[4] || "").trim();
+        
+        if (solName !== "") {
+          currentSolName = solName;
+        }
+        if (studentPw !== "") {
+          currentPw = studentPw;
+        }
+        if (url !== "") {
+          currentUrl = url;
+        }
+        
+        if (currentSolName !== "") {
+          // 관리자 시트에서 매칭되는 host 검색 (부분 매칭 포함)
+          let matchedHost = hostMap[currentSolName] || "";
+          if (!matchedHost) {
+            // "OKESTRO CMP 3.0.5\n(관리자)" 등 형태에 대비해 부분 매칭 시도
+            const cleanKey = currentSolName.replace(/\s+/g, "").toLowerCase();
+            const matchedKey = Object.keys(hostMap).find(k => {
+              const cleanK = k.replace(/\s+/g, "").toLowerCase();
+              return cleanKey.includes(cleanK) || cleanK.includes(cleanKey);
+            });
+            if (matchedKey) {
+              matchedHost = hostMap[matchedKey];
+            }
+          }
+
+          academyData.solutions.push({
+            name: currentSolName,
+            id: studentId,
+            pw: currentPw,
+            url: currentUrl,
+            host: matchedHost
+          });
+        }
+      });
+    }
+
+    // 3. 실습용 VPN 계정 정보 시트 파싱
+    const vpnSheet = workbook.Sheets['실습용 VPN 계정 정보'];
+    if (vpnSheet) {
+      const rows = XLSX.utils.sheet_to_json(vpnSheet, { header: 1, defval: "" });
+      rows.forEach((row, idx) => {
+        if (idx < 3) return; // 헤더 설명 및 컬럼명 스킵
+        const no = parseInt(row[0], 10);
+        const id = String(row[1] || "").trim();
+        const pw = String(row[2] || "").trim();
+        if (id !== "" && !isNaN(no)) {
+          academyData.vpnAccounts.push({ no, id, pw });
+        }
+      });
+    }
+
+    // 4. 교육자료 다운로드 시트 파싱
+    const dlSheet = workbook.Sheets['교육자료 다운로드'];
+    if (dlSheet) {
+      const rows = XLSX.utils.sheet_to_json(dlSheet, { header: 1, defval: "" });
+      rows.forEach((row, idx) => {
+        if (idx < 1) return;
+        const name = String(row[0] || "").trim();
+        const url = String(row[1] || "").trim();
+        const visible = row[2] === true || String(row[2]).trim().toLowerCase() === "true" || String(row[2]).trim().toUpperCase() === "Y";
+        if (name !== "" && visible) {
+          academyData.downloads.push({ name, url });
+        }
+      });
+    }
+
+    // 5. Trombone 미들웨어 접속정보 시트 파싱
+    const mwSheet = workbook.Sheets['Trombone 미들웨어 접속정보'];
+    if (mwSheet) {
+      const rows = XLSX.utils.sheet_to_json(mwSheet, { header: 1, defval: "" });
+      rows.forEach((row, idx) => {
+        if (idx < 1) return;
+        const name = String(row[0] || "").trim();
+        const id = String(row[1] || "").trim();
+        const pw = String(row[2] || "").trim();
+        if (name !== "") {
+          academyData.middlewares.push({ name, id, pw });
+        }
+      });
+    }
+
+    // 6. TROMBONE 서비스 접속 정보 시트 파싱
+    const tbServiceSheet = workbook.Sheets['TROMBONE 서비스 접속 정보'];
+    if (tbServiceSheet) {
+      const rows = XLSX.utils.sheet_to_json(tbServiceSheet, { header: 1, defval: "" });
+      for (let idx = 1; idx < rows.length; idx++) {
+        const row = rows[idx];
+        const vpnId = String(row[0] || "").trim();
+        const userId = String(row[1] || "").trim();
+        const bizCode = String(row[2] || "").trim();
+        const gitRepo = String(row[3] || "").trim();
+        const env = String(row[4] || "").trim();
+        const url = String(row[5] || "").trim();
+        
+        if (vpnId.startsWith("handson-") || vpnId === "강사") {
+          let no = 0;
+          if (vpnId === "강사") {
+            no = 0;
+          } else {
+            no = parseInt(vpnId.replace("handson-", ""), 10);
+          }
+          
+          const nextRow = rows[idx + 1] || [];
+          const nextEnv = String(nextRow[4] || "").trim();
+          const nextUrl = String(nextRow[5] || "").trim();
+          
+          let stgUrl = "";
+          let prdUrl = "";
+          if (env === "STG") stgUrl = url;
+          if (env === "PRD") prdUrl = url;
+          if (nextEnv === "STG") stgUrl = nextUrl;
+          if (nextEnv === "PRD") prdUrl = nextUrl;
+
+          academyData.tromboneServices.push({
+            no,
+            vpnId,
+            userId,
+            bizCode,
+            gitRepo,
+            stgUrl,
+            prdUrl
+          });
+          
+          idx++; // PRD 행 스킵
+        }
+      }
+    }
+
+    // data.js 파일 생성
+    const jsContent = `// Automatically generated from Excel file
+const academyData = ${JSON.stringify(academyData, null, 2)};
+
+window.ACADEMY_DATA = academyData;
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = academyData;
+}`;
+    fs.writeFileSync(OUTPUT_FILE, jsContent, 'utf8');
+    console.log(`[${new Date().toLocaleTimeString()}] ✓ data.js 업데이트 완료 (솔루션: ${academyData.solutions.length}개, 미들웨어: ${academyData.middlewares.length}개, 다운로드: ${academyData.downloads.length}개)`);
+
+  } catch (err) {
+    console.error('엑셀 파싱 중 에러 발생:', err.message);
+  }
+}
+
+// 최초 1회 실행
+parseExcel();
+
+// 엑셀 파일 실시간 감시 시작
+const watcher = chokidar.watch(EXCEL_FILE, {
+  persistent: true,
+  ignoreInitial: true
+});
+
+watcher.on('change', () => {
+  console.log('엑셀 파일 변경이 감지되었습니다. 재파싱을 진행합니다...');
+  // 엑셀 편집 중 저장 시 일시적인 파일 락(EBUSY) 대비 딜레이 적용
+  setTimeout(parseExcel, 500);
+});
+
+watcher.on('error', error => console.error('감시 오류 발생:', error));

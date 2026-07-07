@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오케스트로 아카데미 Hub - 교육생 대시보드</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* -------------------------------------------------------------
+       1. Design System & CSS Tokens
+       ------------------------------------------------------------- */
+    :root[data-theme="light"] {
+      --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      --bg-main: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --card-border: rgba(226, 232, 240, 0.8);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-glow: rgba(37, 99, 235, 0.15);
+      --accent: #0ea5e9;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --glass-shadow: 0 8px 32px 0 rgba(148, 163, 184, 0.1);
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --table-header-bg: #f1f5f9;
+      --table-row-hover: #f8fafc;
+    }
+
+    :root[data-theme="dark"] {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+      --bg-main: #0b0f19;
+      --card-bg: rgba(15, 23, 42, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --primary-glow: rgba(59, 130, 246, 0.25);
+      --accent: #38bdf8;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      --input-bg: #1e293b;
+      --input-border: #334155;
+      --table-header-bg: #1e293b;
+      --table-row-hover: #1e293b77;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+
+    /* -------------------------------------------------------------
+       2. Layout & Typography
+       ------------------------------------------------------------- */
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1.25rem 2rem;
+      border-radius: 1.25rem;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.25rem;
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    .logo-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, var(--text-primary), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-toggle-theme {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text-primary);
+      padding: 0.6rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-toggle-theme:hover {
+      background: var(--primary-glow);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Cards */
+    .dashboard-card {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      opacity: 0.8;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .card-title svg {
+      color: var(--primary);
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    /* Table & View styles */
+    .vpn-table-container {
+      overflow-x: auto;
+      border-radius: 0.75rem;
+      border: 1px solid var(--input-border);
+    }
+
+    .vpn-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .vpn-table th {
+      background-color: var(--table-header-bg);
+      color: var(--text-secondary);
+      font-weight: 600;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--input-border);
+    }
+
+    .vpn-table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--card-border);
+      color: var(--text-primary);
+    }
+
+    /* Copyable Box */
+    .vpn-credential-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      padding: 0.4rem 0.75rem;
+      border-radius: 0.35rem;
+      font-family: 'Consolas', 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      gap: 1rem;
+    }
+
+    .btn-copy {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 0.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.25rem;
+      transition: all 0.15s;
+    }
+
+    .btn-copy:hover {
+      color: var(--primary);
+      background: var(--primary-glow);
+    }
+
+    /* Download Materials View */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .download-card-item {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: all 0.2s;
+    }
+
+    .download-card-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--glass-shadow);
+      border-color: var(--primary);
+    }
+
+    .download-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      text-align: center;
+      padding: 0.6rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      box-shadow: 0 4px 10px var(--primary-glow);
+    }
+
+    .download-btn:hover {
+      filter: brightness(1.1);
+    }
+
+    /* Toast Alert System */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 1000;
+    }
+
+    .toast {
+      background: rgba(15, 23, 42, 0.9);
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateY(100px);
+      opacity: 0;
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    [data-theme="light"] .toast {
+      background: rgba(255, 255, 255, 0.95);
+      color: #0f172a;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 10px 25px rgba(148, 163, 184, 0.2);
+    }
+
+    @keyframes toastIn {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Warning highlight for unselected dropdowns */
+    .highlight-warn {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+      animation: pulseHighlight 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseHighlight {
+      0%, 100% { border-color: #ef4444; }
+      50% { border-color: #fca5a5; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: auto;
+      border-top: 1px solid var(--card-border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container" id="trainee-dashboard">
+    <!-- Header Area -->
+    <header>
+      <div class="logo-container" style="display: flex; align-items: center; gap: 0.75rem;">
+        <img src="public/logo.png" alt="OKESTRO Logo" style="height: 28px; object-fit: contain;">
+        <div class="logo-text">
+          <h1>ACADEMY Hub</h1>
+          <p>교육생 대시보드</p>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <!-- Dark/Light Theme Toggle -->
+        <button class="btn-toggle-theme" id="btn-theme-toggle" onclick="toggleTheme()" aria-label="테마 전환">
+          <svg id="theme-sun-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+          <svg id="theme-moon-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-grid">
+
+      <!-- 1. WiFi & Attendance Settings -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        <!-- WiFi Section -->
+        <div class="dashboard-card" style="margin-bottom: 0;">
+          <div class="card-title">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071a10.5 10.5 0 0114.14 0M1.34 8.636a16.5 16.5 0 0122.32 0"/></svg>
+            교육장 WiFi 정보
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 0.5rem;">
+            <div class="vpn-credential-box">
+              <div style="display: flex; flex-direction: column;">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">SSID (네트워크 이름)</span>
+                <span id="user-wifi-ssid" style="font-size: 1rem; font-weight: 700; color: var(--text-primary);">OCT_Academy_5G</span>
+              </div>
+              <button class="btn-copy" onclick="copyToClipboard('user-wifi-ssid', 'WiFi SSID가 복사되었습니다.')" aria-label="복사">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              </button>
+            </div>
+            <div class="vpn-credential-box">
+              <div style="display: flex; flex-direction: column;">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">SSID 비밀번호</span>
+                <span id="user-wifi-pw" style="font-size: 1rem; font-weight: 700; color: var(--text-primary);">oct1234567!</span>
+              </div>
+              <button class="btn-copy" onclick="copyToClipboard('user-wifi-pw', 'WiFi 비밀번호가 복사되었습니다.')" aria-label="복사">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attendance Section -->
+        <div class="dashboard-card" style="margin-bottom: 0;">
+          <div class="card-title">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            일일 출석체크
+          </div>
+          <div style="display: flex; gap: 1.25rem; align-items: center; height: 100%; margin-top: 0.5rem;">
+            <div style="background: white; padding: 0.5rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; width: 105px; height: 105px; border: 1px solid var(--card-border); flex-shrink: 0; box-shadow: var(--glass-shadow);">
+              <img id="user-qr-img" src="" alt="QR" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.6rem; flex-grow: 1;">
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.45;">스마트폰 카메라로 QR 코드를 스캔하거나 아래 버튼을 클릭하여 출석체크 페이지로 이동하세요.</p>
+              <a id="user-attendance-link" href="" target="_blank" class="download-btn" style="text-decoration: none; margin-top: 0.25rem;">
+                출석체크 바로가기
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. VPN Accounts Viewer -->
+      <div class="dashboard-card">
+        <div class="card-title">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          실습용 VPN 계정 정보
+        </div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.2rem; line-height:1.6;">
+          실습용 노트북 번호를 확인 후, 아래 드롭다운에서 선택하면 VPN 계정 정보가 표시됩니다.
+        </p>
+        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+          <label for="vpn-laptop-select" style="font-size:0.9rem; font-weight:600; color:var(--text-secondary); white-space:nowrap;">노트북 번호 선택</label>
+          <select id="vpn-laptop-select" onchange="onVpnSelect(this.value)"
+            style="flex:1;min-width:160px;max-width:240px;background:var(--input-bg);border:1.5px solid var(--input-border);color:var(--text-primary);padding:0.6rem 1rem;border-radius:0.6rem;font-size:0.95rem;font-family:inherit;cursor:pointer;outline:none;transition:border-color 0.2s;">
+            <option value="">-- 번호 선택 --</option>
+          </select>
+        </div>
+        <div id="vpn-result-box" style="display:none;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="vpn-credential-box" style="flex-direction:column;align-items:flex-start;gap:0.4rem;padding:1rem 1.2rem;">
+              <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;">VPN ID</span>
+              <div style="display:flex;align-items:center;gap:0.5rem;width:100%;">
+                <span id="vpn-result-id" style="font-size:0.95rem;font-weight:700;color:var(--text-primary);font-family:monospace;"></span>
+                <button class="btn-copy" onclick="copyToClipboard('vpn-result-id','VPN ID가 복사되었습니다.')" aria-label="VPN ID 복사" style="margin-left:auto;">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="vpn-credential-box" style="flex-direction:column;align-items:flex-start;gap:0.4rem;padding:1rem 1.2rem;">
+              <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;">Password</span>
+              <div style="display:flex;align-items:center;gap:0.5rem;width:100%;">
+                <span id="vpn-result-pw" style="font-size:0.95rem;font-weight:700;color:var(--text-primary);font-family:monospace;"></span>
+                <button class="btn-copy" onclick="copyToClipboard('vpn-result-pw','VPN Password가 복사되었습니다.')" aria-label="Password 복사" style="margin-left:auto;">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="vpn-placeholder" style="text-align:center;padding:1.5rem 0;color:var(--text-muted);font-size:0.88rem;">
+          <svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="display:block;margin:0 auto 0.6rem;opacity:0.35;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          노트북 번호를 선택하면 계정 정보가 표시됩니다.
+        </div>
+      </div>
+
+      <!-- 3. Solutions Access Viewer -->
+      <div class="dashboard-card">
+        <div class="card-title">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          실습 솔루션 접속 정보
+        </div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.2rem; line-height:1.6;">
+          실습용 노트북 번호와 접속할 솔루션명을 선택하시면 계정 및 접속 정보가 표시됩니다.
+        </p>
+        <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+          <div style="display:flex; align-items:center; gap:0.6rem; flex:1; min-width:200px;">
+            <label for="sol-laptop-select" style="font-size:0.9rem; font-weight:600; color:var(--text-secondary); white-space:nowrap;">노트북 번호</label>
+            <select id="sol-laptop-select" onchange="onSolChange()"
+              style="flex:1;background:var(--input-bg);border:1.5px solid var(--input-border);color:var(--text-primary);padding:0.6rem 1rem;border-radius:0.6rem;font-size:0.95rem;font-family:inherit;cursor:pointer;outline:none;transition:border-color 0.2s;">
+              <option value="">-- 번호 선택 --</option>
+            </select>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem; flex:1.5; min-width:250px;">
+            <label for="sol-name-select" style="font-size:0.9rem; font-weight:600; color:var(--text-secondary); white-space:nowrap;">솔루션명</label>
+            <select id="sol-name-select" onchange="onSolChange()"
+              style="flex:1;background:var(--input-bg);border:1.5px solid var(--input-border);color:var(--text-primary);padding:0.6rem 1rem;border-radius:0.6rem;font-size:0.95rem;font-family:inherit;cursor:pointer;outline:none;transition:border-color 0.2s;">
+              <option value="">-- 솔루션 선택 --</option>
+            </select>
+          </div>
+        </div>
+        <div class="vpn-table-container">
+          <table class="vpn-table">
+            <thead>
+              <tr>
+                <th>솔루션명</th>
+                <th>ID</th>
+                <th>Password</th>
+                <th>접속 URL</th>
+              </tr>
+            </thead>
+            <tbody id="user-solutions-list">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 4. TROMBONE Service Access Viewer -->
+      <div class="dashboard-card" id="section-trombone-services" style="display: none;">
+        <div class="card-title">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          TROMBONE 서비스 접속 정보
+        </div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.2rem; line-height:1.6;">
+          실습용 노트북 번호를 선택하시면 TROMBONE 개별 서비스 계정 및 STG/PRD 접속 경로가 표시됩니다.
+        </p>
+        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+          <label for="tb-laptop-select" style="font-size:0.9rem; font-weight:600; color:var(--text-secondary); white-space:nowrap;">노트북 번호 선택</label>
+          <select id="tb-laptop-select" onchange="onTbServiceChange(this.value)"
+            style="flex:1;min-width:160px;max-width:240px;background:var(--input-bg);border:1.5px solid var(--input-border);color:var(--text-primary);padding:0.6rem 1rem;border-radius:0.6rem;font-size:0.95rem;font-family:inherit;cursor:pointer;outline:none;transition:border-color 0.2s;">
+            <option value="">-- 번호 선택 --</option>
+          </select>
+        </div>
+        <div class="vpn-table-container">
+          <table class="vpn-table">
+            <thead>
+              <tr>
+                <th>VPN ID</th>
+                <th>User ID</th>
+                <th>업무코드</th>
+                <th>Git 저장소</th>
+                <th>접속 URL (STG)</th>
+                <th>접속 URL (PRD)</th>
+              </tr>
+            </thead>
+            <tbody id="user-tb-services-list">
+              <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">노트북 번호를 선택하면 접속 정보가 표시됩니다.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 5. Downloads Section -->
+      <div class="dashboard-card">
+        <div class="card-title">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          교육 교재 및 실습자료 다운로드
+        </div>
+        <div class="download-grid" id="user-download-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- 6. Inquiry Section -->
+      <div class="dashboard-card" style="margin-bottom: 2rem;">
+        <div class="card-title">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l2.828 2.828M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          문의하기
+        </div>
+        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+          <div class="vpn-credential-box" style="flex: 1; min-width: 250px;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">E-mail</span>
+              <span id="inquiry-email" style="font-size: 1rem; font-weight: 700; color: var(--text-primary);">academy@okestro.com</span>
+            </div>
+            <button class="btn-copy" onclick="copyToClipboard('inquiry-email', '이메일 주소가 복사되었습니다.')" aria-label="이메일 복사">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+          </div>
+          <div class="vpn-credential-box" style="flex: 1; min-width: 250px;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">카카오톡 채널</span>
+              <span id="inquiry-kakao" style="font-size: 1rem; font-weight: 700; color: var(--text-primary);">okestro_academy 검색</span>
+            </div>
+            <button class="btn-copy" onclick="copyToClipboard('inquiry-kakao', '카카오 채널 검색어가 복사되었습니다.')" aria-label="카카오 채널 검색어 복사">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Toast Notification Area -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <footer>
+    <p>&copy; 2026 ORQUESTRO Academy. All rights reserved.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    /* =========================================================
+       1. App State & Default Mock Data (Spreadsheet Fallback Structure)
+       ========================================================= */
+    const defaultData = {
+      wifi: {
+        ssid: "OCT_Academy_5G",
+        pw: "oct1234567!"
+      },
+      attendance: {
+        qrUrl: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://academy.orquestro.com/attendance",
+        link: "https://academy.orquestro.com/attendance"
+      },
+      vpns: [
+        { no: 1,  id: "rydbr2o26-1",  pw: "EB7TPP7wSqpx" },
+        { no: 2,  id: "rydbr2o26-2",  pw: "nMBFCxkWVak3" },
+        { no: 3,  id: "rydbr2o26-3",  pw: "z9rmYSbbkfvv" },
+        { no: 4,  id: "rydbr2o26-4",  pw: "Kb3cK2H1Fy97" },
+        { no: 5,  id: "rydbr2o26-5",  pw: "il1F98mduykO" },
+        { no: 6,  id: "rydbr2o26-6",  pw: "0EpB9mbdEIQS" },
+        { no: 7,  id: "rydbr2o26-7",  pw: "91DDYymVM7jz" },
+        { no: 8,  id: "rydbr2o26-8",  pw: "Be6WoeM4w13H" },
+        { no: 9,  id: "rydbr2o26-9",  pw: "D9C373lsNy6F" },
+        { no: 10, id: "rydbr2o26-10", pw: "vw1W7i48l47Y" }
+      ],
+      downloads: [
+        { id: "dl-1", name: "1. [교재] 클라우드 기초 및 OpenStack 아키텍처 가이드.pdf", url: "https://example.com/books/openstack-guide.pdf" },
+        { id: "dl-2", name: "2. [실습] OpenStack 배포 실습 스크립트 모음집.zip", url: "https://example.com/labs/openstack-scripts.zip" },
+        { id: "dl-3", name: "3. [교재] 쿠버네티스 컨테이너 오케스트레이션 심화.pdf", url: "https://example.com/books/kubernetes-deepdive.pdf" }
+      ],
+      solutions: [
+        { name: "CONTRABASS/VIOLA 3.0.4", id: "admin", pw: "okestro2018@", host: "10.255.62.225 edu.console.304bf.okestro.cloud harbor.okestro.cloud", url: "https://edu.console.304bf.okestro.cloud" },
+        { name: "CONTRABASS/VIOLA 3.0.5", id: "bootfactory", pw: "Okestro2018@", host: "10.255.62.69 edu.console.bf.okestro.cloud", url: "305edu.console.trombone.okestro.cloud" },
+        { name: "TROMBONE 3.0.5", id: "sysadmin", pw: "okestro2018@", host: "10.255.62.70 edu.console.tb.okestro.cloud", url: "http://edu.console.tb.okestro.cloud" }
+      ],
+      tromboneServices: []
+    };
+
+    let appState = {};
+
+    /* =========================================================
+       2. Initialize & Load Data
+       ========================================================= */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Setup Theme (Default to light mode / day mode)
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeTogglerUI(savedTheme);
+
+      // Always start from defaultData (data.js overrides below)
+      // localStorage is intentionally skipped so fresh data.js always wins
+      appState = JSON.parse(JSON.stringify(defaultData));
+
+      // Merge Real-Time Spreadsheet parsed data.js if exists
+      if (window.ACADEMY_DATA) {
+        const d = window.ACADEMY_DATA;
+
+        // WiFi
+        if (d.wifi) appState.wifi = d.wifi;
+
+        // Attendance (data.js uses link+qrUrl; support both formats)
+        if (d.attendance) {
+          appState.attendance = {
+            link: d.attendance.link || d.attendance.url || appState.attendance.link,
+            qrUrl: d.attendance.qrUrl || d.attendance.qr || appState.attendance.qrUrl
+          };
+        }
+
+        // VPNs (data.js may use 'vpnAccounts' or 'vpns')
+        const vpns = d.vpns || d.vpnAccounts || [];
+        if (vpns.length > 0) appState.vpns = vpns;
+
+        // Solutions
+        if (d.solutions && d.solutions.length > 0) appState.solutions = d.solutions;
+
+        // TROMBONE Services
+        if (d.tromboneServices && d.tromboneServices.length > 0) appState.tromboneServices = d.tromboneServices;
+
+        // Downloads
+        if (d.downloads && d.downloads.length > 0) appState.downloads = d.downloads;
+      }
+
+      // Render Dashboard Content
+      renderTraineeView();
+    });
+
+    /* =========================================================
+       3. Theme Management
+       ========================================================= */
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeTogglerUI(newTheme);
+      showToast(newTheme === 'dark' ? '다크 테마가 적용되었습니다.' : '라이트 테마가 적용되었습니다.');
+    }
+
+    function updateThemeTogglerUI(theme) {
+      const sunIcon = document.getElementById('theme-sun-icon');
+      const moonIcon = document.getElementById('theme-moon-icon');
+      if (theme === 'dark') {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+    }
+
+    /* =========================================================
+       4. Trainee Render Functions (Viewer Layouts)
+       ========================================================= */
+    function renderTraineeView() {
+      // 1) WiFi SSID & PW
+      document.getElementById('user-wifi-ssid').textContent = appState.wifi.ssid;
+      document.getElementById('user-wifi-pw').textContent = appState.wifi.pw;
+
+      // 2) Attendance QR & URL
+      const qrImg = document.getElementById('user-qr-img');
+      const attendanceLink = document.getElementById('user-attendance-link');
+      qrImg.src = appState.attendance.qrUrl;
+      attendanceLink.href = appState.attendance.link;
+
+      // 2.5) Middleware List rendering
+      const mwListContainer = document.getElementById('user-middlewares-list');
+      if (mwListContainer) {
+        mwListContainer.innerHTML = '';
+        const mws = appState.middlewares || [];
+        if (mws.length > 0) {
+          mws.forEach(mw => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td style="font-weight: 600; color: var(--text-heading); text-align: left; padding-left: 15px;">${mw.name}</td>
+              <td>
+                <div class="vpn-credential-box">
+                  <span id="mw-id-${mw.name}">${escapeHTML(mw.id)}</span>
+                  <button class="btn-copy" onclick="copyToClipboard('mw-id-${mw.name}', '${mw.name} ID가 복사되었습니다.')" aria-label="ID 복사">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                  </button>
+                </div>
+              </td>
+              <td>
+                <div class="vpn-credential-box">
+                  <span id="mw-pw-${mw.name}">${escapeHTML(mw.pw)}</span>
+                  <button class="btn-copy" onclick="copyToClipboard('mw-pw-${mw.name}', '${mw.name} PW가 복사되었습니다.')" aria-label="비밀번호 복사">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                  </button>
+                </div>
+              </td>
+            `;
+            mwListContainer.appendChild(tr);
+          });
+        } else {
+          mwListContainer.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--text-muted);">등록된 미들웨어 정보가 없습니다.</td></tr>';
+        }
+      }
+
+      // 3) VPN Accounts — populate dropdown
+      const vpnSelect = document.getElementById('vpn-laptop-select');
+      if (vpnSelect) {
+        // 기존 옵션 초기화 (첫번째 placeholder는 유지)
+        while (vpnSelect.options.length > 1) vpnSelect.remove(1);
+        const vpns = appState.vpns || [];
+        vpns.forEach(vpn => {
+          const opt = document.createElement('option');
+          opt.value = vpn.no;
+          opt.textContent = `노트북 ${vpn.no}번`;
+          vpnSelect.appendChild(opt);
+        });
+      }
+
+      // 4) Solutions — populate dropdowns
+      const solSelect = document.getElementById('sol-laptop-select');
+      if (solSelect) {
+        while (solSelect.options.length > 1) solSelect.remove(1);
+        for (let i = 1; i <= 10; i++) {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = `노트북 ${i}번`;
+          solSelect.appendChild(opt);
+        }
+      }
+
+      const solNameSelect = document.getElementById('sol-name-select');
+      if (solNameSelect) {
+        while (solNameSelect.options.length > 1) solNameSelect.remove(1);
+        
+        // appState.solutions 에서 중복 제거된 고유 name 리스트 추출
+        const solutions = appState.solutions || [];
+        const names = [];
+        solutions.forEach(s => {
+          if (s.name && !names.includes(s.name)) {
+            names.push(s.name);
+          }
+        });
+        
+        // 정렬하여 드롭다운에 삽입
+        names.sort().forEach(name => {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name.replace(/\r\n/g, ' ').replace(/\n/g, ' '); // 혹시 개행 있으면 공백으로 치환
+          solNameSelect.appendChild(opt);
+        });
+      }
+      const solTbody = document.getElementById('user-solutions-list');
+      if (solTbody) {
+        solTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">노트북 번호와 솔루션명을 선택하면 접속 정보가 표시됩니다.</td></tr>`;
+      }
+
+      // 4.5) TROMBONE Services — populate dropdown
+      const tbSelect = document.getElementById('tb-laptop-select');
+      if (tbSelect) {
+        while (tbSelect.options.length > 1) tbSelect.remove(1);
+        for (let i = 1; i <= 10; i++) {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = `노트북 ${i}번`;
+          tbSelect.appendChild(opt);
+        }
+      }
+
+      // 6) Downloads List (Read-only card items)
+      const dlGrid = document.getElementById('user-download-list');
+      dlGrid.innerHTML = '';
+      if (!appState.downloads || appState.downloads.length === 0) {
+        dlGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">등록된 교육 교재가 없습니다.</div>`;
+      } else {
+        appState.downloads.forEach(dl => {
+          const item = document.createElement('div');
+          item.className = 'download-card-item';
+          item.innerHTML = `
+            <div style="font-weight: 600; font-size: 0.95rem; line-height: 1.4; color: var(--text-primary);">${escapeHTML(dl.name)}</div>
+            <a href="${escapeHTML(dl.url)}" target="_blank" class="download-btn" style="text-decoration: none;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              다운로드
+            </a>
+          `;
+          dlGrid.appendChild(item);
+        });
+      }
+
+      // 7) 초기 드롭다운 경고 하이라이트 상태 반영
+      updateDropdownHighlight('vpn-laptop-select');
+      updateDropdownHighlight('sol-laptop-select');
+      updateDropdownHighlight('sol-name-select');
+      updateDropdownHighlight('tb-laptop-select');
+    }
+
+    /* =========================================================
+       5. Clipboard Utility & Helpers
+       ========================================================= */
+    function copyToClipboard(elementId, successMessage) {
+      const text = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMessage);
+      }).catch(err => {
+        console.error('복사 실패:', err);
+        showToast('복사에 실패했습니다.', 'warning');
+      });
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      
+      let icon = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--success);"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+      if (type === 'warning') {
+        icon = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--warning);"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+      }
+
+      toast.innerHTML = `${icon} <span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.animation = 'toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) reverse forwards';
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 2500);
+    }
+
+    /* Dropdown warning highlight helper */
+    function updateDropdownHighlight(selectId) {
+      const selectElement = document.getElementById(selectId);
+      if (!selectElement) return;
+      if (selectElement.value === "") {
+        selectElement.classList.add('highlight-warn');
+      } else {
+        selectElement.classList.remove('highlight-warn');
+      }
+    }
+
+    /* =========================================================
+       5.5. VPN Dropdown Selector
+       ========================================================= */
+    function onVpnSelect(selectedNo) {
+      // 1) 드롭다운 하이라이트 상태 업데이트
+      updateDropdownHighlight('vpn-laptop-select');
+
+      const resultBox = document.getElementById('vpn-result-box');
+      const placeholder = document.getElementById('vpn-placeholder');
+      const resultId = document.getElementById('vpn-result-id');
+      const resultPw = document.getElementById('vpn-result-pw');
+
+      if (!selectedNo) {
+        resultBox.style.display = 'none';
+        placeholder.style.display = 'block';
+        return;
+      }
+
+      const no = parseInt(selectedNo, 10);
+      const vpns = appState.vpns || [];
+      const found = vpns.find(v => v.no === no);
+
+      if (found) {
+        resultId.textContent = found.id;
+        resultPw.textContent = found.pw;
+        placeholder.style.display = 'none';
+        resultBox.style.display = 'block';
+
+        // 아래의 실습 솔루션 접속정보 노트북 드롭다운도 같은 번호로 자동 선택 및 렌더링
+        const solLaptopSelect = document.getElementById('sol-laptop-select');
+        if (solLaptopSelect) {
+          solLaptopSelect.value = selectedNo;
+          onSolChange();
+        }
+
+        // TROMBONE 서비스 접속 정보 노트북 드롭다운도 함께 자동 선택 및 렌더링
+        const tbLaptopSelect = document.getElementById('tb-laptop-select');
+        if (tbLaptopSelect) {
+          tbLaptopSelect.value = selectedNo;
+          onTbServiceChange(selectedNo);
+        }
+      }
+    }
+
+    /* =========================================================
+       5.6. Solutions Selector change handler
+       ========================================================= */
+    function onSolChange() {
+      const laptopSelect = document.getElementById('sol-laptop-select');
+      const nameSelect = document.getElementById('sol-name-select');
+      const solTbody = document.getElementById('user-solutions-list');
+      
+      if (!solTbody) return;
+      solTbody.innerHTML = '';
+
+      // 1) 드롭다운 하이라이트 상태 업데이트
+      updateDropdownHighlight('sol-laptop-select');
+      updateDropdownHighlight('sol-name-select');
+
+      const selectedNo = laptopSelect ? laptopSelect.value : '';
+      const selectedName = nameSelect ? nameSelect.value : '';
+
+      // 2) TROMBONE 선택 시 하단 전용 서비스 접속 카드 보이기/숨기기 토글
+      const tbServiceCard = document.getElementById('section-trombone-services');
+      if (tbServiceCard) {
+        if (selectedName.toUpperCase().includes('TROMBONE')) {
+          tbServiceCard.style.display = 'block';
+        } else {
+          tbServiceCard.style.display = 'none';
+        }
+      }
+
+      if (!selectedNo || !selectedName) {
+        solTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">노트북 번호와 솔루션명을 선택하면 접속 정보가 표시됩니다.</td></tr>`;
+        return;
+      }
+
+      const no = parseInt(selectedNo, 10);
+      const solutions = appState.solutions || [];
+
+      // 1) 솔루션명 매칭 항목 필터링 (개행문자 및 공백 유연하게 비교)
+      const cleanTargetName = selectedName.replace(/\s+/g, '').toLowerCase();
+      const groupList = solutions.filter(s => {
+        const cleanName = s.name.replace(/\s+/g, '').toLowerCase();
+        return cleanName === cleanTargetName;
+      });
+
+      if (groupList.length === 0) {
+        solTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">해당 솔루션에 등록된 정보가 없습니다.</td></tr>`;
+        return;
+      }
+
+      // 2) 개인별 ID(예: user2, edu02 등 접두사+번호)를 갖는 그룹인지 확인
+      const hasIndividual = groupList.some(s => /^[a-zA-Z]+\d+$/i.test(s.id));
+      let matchSol = null;
+
+      if (hasIndividual) {
+        // ID 끝에 붙은 숫자가 선택된 번호 no와 일치하는 항목 검색
+        matchSol = groupList.find(s => {
+          const idStr = String(s.id || "").trim().toLowerCase();
+          const numPart = idStr.replace(/^[a-zA-Z]+/, '');
+          const num = parseInt(numPart, 10);
+          return num === no;
+        });
+      } else {
+        // 공통 계정이면 첫 번째 항목을 사용
+        matchSol = groupList[0];
+      }
+
+      if (!matchSol) {
+        solTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">선택하신 노트북 번호(${no}번)에 할당된 계정 정보가 없습니다.</td></tr>`;
+        return;
+      }
+
+      // 3) 단일 매칭 결과 렌더링
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight:700; color: var(--primary);">${escapeHTML(matchSol.name)}</td>
+        <td>
+          <div class="vpn-credential-box">
+            <span id="sol-id-0">${escapeHTML(matchSol.id || '-')}</span>
+            ${matchSol.id ? `
+            <button class="btn-copy" onclick="copyToClipboard('sol-id-0', '솔루션 ID가 복사되었습니다.')" aria-label="ID 복사">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+            ` : ''}
+          </div>
+        </td>
+        <td>
+          <div class="vpn-credential-box">
+            <span id="sol-pw-0">${escapeHTML(matchSol.pw || '-')}</span>
+            ${matchSol.pw ? `
+            <button class="btn-copy" onclick="copyToClipboard('sol-pw-0', '솔루션 비밀번호가 복사되었습니다.')" aria-label="비밀번호 복사">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+            ` : ''}
+          </div>
+        </td>
+        <td>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <a href="${(() => {
+              let url = matchSol.url || '';
+              // CONTRABASS/VIOLA 3.0.5 접속 도메인이 TROMBONE용 도메인(trombone)으로 잘못 입력된 경우, 
+              // 실제 VIOLA 3.0.5 서버인 bf 도메인(305edu.console.bf.okestro.cloud)으로 자동 교정해 리다이렉션을 방지합니다.
+              if (matchSol.name.includes("CONTRABASS/VIOLA 3.0.5") && url.includes("trombone")) {
+                url = "305edu.console.bf.okestro.cloud";
+              }
+              const finalUrl = url ? (url.startsWith('http') ? url : 'https://' + url) : '#';
+              return escapeHTML(finalUrl);
+            })()}" target="_blank" class="download-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; box-shadow: none; text-decoration: none;">
+              접속하기
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+          </div>
+        </td>
+      `;
+      solTbody.appendChild(tr);
+    }
+
+    /* =========================================================
+       5.7. TROMBONE Service Dropdown Selector
+       ========================================================= */
+    function onTbServiceChange(selectedNo) {
+      updateDropdownHighlight('tb-laptop-select');
+
+      const tbTbody = document.getElementById('user-tb-services-list');
+      if (!tbTbody) return;
+      tbTbody.innerHTML = '';
+
+      if (!selectedNo) {
+        tbTbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">노트북 번호를 선택하면 접속 정보가 표시됩니다.</td></tr>`;
+        return;
+      }
+
+      const no = parseInt(selectedNo, 10);
+      const services = appState.tromboneServices || [];
+      const found = services.find(s => s.no === no);
+
+      if (!found) {
+        tbTbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">선택하신 노트북 번호(${no}번)에 할당된 TROMBONE 서비스 정보가 없습니다.</td></tr>`;
+        return;
+      }
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight:700; color: var(--accent);">${escapeHTML(found.vpnId)}</td>
+        <td>
+          <div class="vpn-credential-box">
+            <span id="tb-uid-0">${escapeHTML(found.userId || '-')}</span>
+            ${found.userId ? `
+            <button class="btn-copy" onclick="copyToClipboard('tb-uid-0', 'User ID가 복사되었습니다.')" aria-label="ID 복사">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+            ` : ''}
+          </div>
+        </td>
+        <td>
+          <div class="vpn-credential-box">
+            <span id="tb-biz-0">${escapeHTML(found.bizCode || '-')}</span>
+            ${found.bizCode ? `
+            <button class="btn-copy" onclick="copyToClipboard('tb-biz-0', '업무코드가 복사되었습니다.')" aria-label="업무코드 복사">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+            ` : ''}
+          </div>
+        </td>
+        <td>
+          <div class="vpn-credential-box">
+            <span id="tb-git-0">${escapeHTML(found.gitRepo || '-')}</span>
+            ${found.gitRepo ? `
+            <button class="btn-copy" onclick="copyToClipboard('tb-git-0', 'Git 저장소가 복사되었습니다.')" aria-label="Git 복사">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+            ` : ''}
+          </div>
+        </td>
+        <td>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <a href="${escapeHTML(found.stgUrl || '#')}" target="_blank" class="download-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; box-shadow: none; text-decoration: none;">
+              STG 접속
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+          </div>
+        </td>
+        <td>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <a href="${escapeHTML(found.prdUrl || '#')}" target="_blank" class="download-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; box-shadow: none; text-decoration: none;">
+              PRD 접속
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+          </div>
+        </td>
+      `;
+      tbTbody.appendChild(tr);
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>'"]/g, 
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+      );
+    }
+  </script>
+</body>
+</html>
