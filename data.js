@@ -11,6 +11,7 @@ const academyData = {
   "solutions": [
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 1,
       "id": "user1",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -18,6 +19,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 2,
       "id": "user2",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -25,6 +27,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 3,
       "id": "user3",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -32,6 +35,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 4,
       "id": "user4",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -39,6 +43,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 5,
       "id": "user5",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -46,6 +51,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 6,
       "id": "user6",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -53,6 +59,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 7,
       "id": "user7",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -60,6 +67,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 8,
       "id": "user8",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -67,6 +75,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 9,
       "id": "user9",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -74,6 +83,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.4",
+      "no": 10,
       "id": "user10",
       "pw": "Okestro2026!",
       "url": "https://edu.console.304bf.okestro.cloud",
@@ -81,6 +91,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 1,
       "id": "user1",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -88,6 +99,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 2,
       "id": "user2",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -95,6 +107,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 3,
       "id": "user3",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -102,6 +115,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 4,
       "id": "user4",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -109,6 +123,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 5,
       "id": "user5",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -116,6 +131,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 6,
       "id": "user6",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -123,6 +139,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 7,
       "id": "user7",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -130,6 +147,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 8,
       "id": "user8",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -137,6 +155,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 9,
       "id": "user9",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -144,6 +163,7 @@ const academyData = {
     },
     {
       "name": "CONTRABASS/VIOLA 3.0.5",
+      "no": 10,
       "id": "user10",
       "pw": "Okestro2026@",
       "url": "https://edu.console.bf.okestro.cloud/login",
@@ -151,6 +171,7 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
+      "no": 1,
       "id": "edu01",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
@@ -158,6 +179,7 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
+      "no": 2,
       "id": "edu02",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
@@ -165,6 +187,7 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
+      "no": 3,
       "id": "edu03",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
@@ -172,6 +195,7 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
+      "no": 4,
       "id": "edu04",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
@@ -179,6 +203,7 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
+      "no": 5,
       "id": "edu05",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
@@ -186,6 +211,7 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
+      "no": 6,
       "id": "edu06",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
@@ -193,6 +219,7 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
+      "no": 7,
       "id": "edu07",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
@@ -200,6 +227,7 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
+      "no": 8,
       "id": "edu08",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
@@ -207,29 +235,33 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
-      "id": "edu09",
-      "pw": "Okestro2026!",
-      "url": "https://305edu.console.trombone.okestro.cloud/",
-      "host": "10.255.62.49 minio-console.305edu.console.trombone.okestro.cloud alertmanager.305edu.console.trombone.okestro.cloud argocd.305edu.console.trombone.okestro.cloud gitlab.305edu.console.trombone.okestro.cloud grafana.305edu.console.trombone.okestro.cloud harbor.305edu.console.trombone.okestro.cloud jenkins.305edu.console.trombone.okestro.cloud 305edu.console.trombone.okestro.cloud minio-console.305edu.console.trombone.okestro.cloud nexus.305edu.console.trombone.okestro.cloud prometheus.305edu.console.trombone.okestro.cloud sonarqube.305edu.console.trombone.okestro.cloud"
-    },
-    {
-      "name": "TROMBONE 3.0.5",
+      "no": 9,
       "id": "edu10",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
       "host": "10.255.62.49 minio-console.305edu.console.trombone.okestro.cloud alertmanager.305edu.console.trombone.okestro.cloud argocd.305edu.console.trombone.okestro.cloud gitlab.305edu.console.trombone.okestro.cloud grafana.305edu.console.trombone.okestro.cloud harbor.305edu.console.trombone.okestro.cloud jenkins.305edu.console.trombone.okestro.cloud 305edu.console.trombone.okestro.cloud minio-console.305edu.console.trombone.okestro.cloud nexus.305edu.console.trombone.okestro.cloud prometheus.305edu.console.trombone.okestro.cloud sonarqube.305edu.console.trombone.okestro.cloud"
     },
     {
-      "name": "OKESTRO CMP 3.0.5\r\n(관리자)",
-      "id": "",
+      "name": "TROMBONE 3.0.5",
+      "no": 10,
+      "id": "edu11",
       "pw": "Okestro2026!",
+      "url": "https://305edu.console.trombone.okestro.cloud/",
+      "host": "10.255.62.49 minio-console.305edu.console.trombone.okestro.cloud alertmanager.305edu.console.trombone.okestro.cloud argocd.305edu.console.trombone.okestro.cloud gitlab.305edu.console.trombone.okestro.cloud grafana.305edu.console.trombone.okestro.cloud harbor.305edu.console.trombone.okestro.cloud jenkins.305edu.console.trombone.okestro.cloud 305edu.console.trombone.okestro.cloud minio-console.305edu.console.trombone.okestro.cloud nexus.305edu.console.trombone.okestro.cloud prometheus.305edu.console.trombone.okestro.cloud sonarqube.305edu.console.trombone.okestro.cloud"
+    },
+    {
+      "name": "OKESTRO CMP 3.0.5\r\n(관리자)",
+      "no": null,
+      "id": "-",
+      "pw": "-",
       "url": "https://edu.console.cmp.okestro.cloud",
       "host": "10.255.62.57 edu.console.cmp.okestro.cloud edu.cmp.okestro.cloud"
     },
     {
       "name": "OKESTRO CMP 3.0.5\r\n(사용자)",
-      "id": "",
-      "pw": "Okestro2026!",
+      "no": null,
+      "id": "-",
+      "pw": "-",
       "url": "https://edu.cmp.okestro.cloud",
       "host": "10.255.62.57 edu.console.cmp.okestro.cloud edu.cmp.okestro.cloud"
     }
@@ -381,7 +413,7 @@ const academyData = {
     {
       "no": 9,
       "vpnId": "handson-9",
-      "userId": "user9",
+      "userId": "user10",
       "bizCode": "USER09",
       "gitRepo": "EDU09",
       "stgUrl": "http://10.255.62.49:31309/members",
@@ -390,9 +422,9 @@ const academyData = {
     {
       "no": 10,
       "vpnId": "handson-10",
-      "userId": "user10",
-      "bizCode": "USER11",
-      "gitRepo": "EDU11",
+      "userId": "user11",
+      "bizCode": "USER10",
+      "gitRepo": "EDU10",
       "stgUrl": "http://10.255.62.49:31320/members",
       "prdUrl": "http://10.255.62.49:31321/members"
     }

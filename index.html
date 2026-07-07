@@ -1012,18 +1012,13 @@
         return;
       }
 
-      // 2) 개인별 ID(예: user2, edu02 등 접두사+번호)를 갖는 그룹인지 확인
-      const hasIndividual = groupList.some(s => /^[a-zA-Z]+\d+$/i.test(s.id));
+      // 2) 개인별 노트북 번호(s.no)를 갖는 그룹인지 확인
+      const hasIndividual = groupList.some(s => s.no !== null && s.no !== undefined);
       let matchSol = null;
 
       if (hasIndividual) {
-        // ID 끝에 붙은 숫자가 선택된 번호 no와 일치하는 항목 검색
-        matchSol = groupList.find(s => {
-          const idStr = String(s.id || "").trim().toLowerCase();
-          const numPart = idStr.replace(/^[a-zA-Z]+/, '');
-          const num = parseInt(numPart, 10);
-          return num === no;
-        });
+        // 노트북 번호가 선택된 번호 no와 일치하는 항목 검색
+        matchSol = groupList.find(s => s.no === no);
       } else {
         // 공통 계정이면 첫 번째 항목을 사용
         matchSol = groupList[0];

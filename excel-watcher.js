@@ -77,10 +77,11 @@ function parseExcel(triggerPush = false) {
       
       rows.forEach((row, idx) => {
         if (idx < 1) return; // 헤더 스킵
-        const solName = String(row[1] || "").trim();
-        const studentId = String(row[2] || "").trim();
-        const studentPw = String(row[3] || "").trim();
-        const url = String(row[4] || "").trim();
+        const solName = String(row[1] || "").trim(); // B열
+        const laptopNoText = String(row[2] || "").trim(); // C열 (노트북 번호)
+        const studentId = String(row[3] || "").trim(); // D열 (교육생 ID)
+        const studentPw = String(row[4] || "").trim(); // E열 (교육생 PW)
+        const url = String(row[5] || "").trim(); // F열 (접속주소)
         
         if (solName !== "") {
           currentSolName = solName;
@@ -93,6 +94,15 @@ function parseExcel(triggerPush = false) {
         }
         
         if (currentSolName !== "") {
+          // 노트북 번호 정수 추출 (예: "노트북 5번" -> 5)
+          let laptopNo = null;
+          if (laptopNoText !== "" && laptopNoText !== "-") {
+            const numMatch = laptopNoText.match(/\d+/);
+            if (numMatch) {
+              laptopNo = parseInt(numMatch[0], 10);
+            }
+          }
+
           // 관리자 시트에서 매칭되는 host 검색 (부분 매칭 포함)
           let matchedHost = hostMap[currentSolName] || "";
           if (!matchedHost) {
@@ -109,6 +119,7 @@ function parseExcel(triggerPush = false) {
 
           academyData.solutions.push({
             name: currentSolName,
+            no: laptopNo,
             id: studentId,
             pw: currentPw,
             url: currentUrl,
