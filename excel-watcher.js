@@ -301,7 +301,7 @@ function autoGitPush() {
   console.log('🚀 [GitHub & Vercel] 실시간 배포 동기화(Git Push)를 진행합니다...');
   
   const { exec } = require('child_process');
-  exec('git add data.js && git commit -m "Auto-update data.js from Excel" && git push', (err, stdout, stderr) => {
+  exec('git add data.js && (git diff-index --quiet HEAD -- data.js || git commit -m "Auto-update data.js from Excel" && git push)', (err, stdout, stderr) => {
     isPushing = false;
     if (err) {
       console.error('❌ Git push 동기화 실패:', err.message);
