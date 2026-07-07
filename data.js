@@ -318,12 +318,7 @@ const academyData = {
       "pw": "vw1W7i48l47Y"
     }
   ],
-  "downloads": [
-    {
-      "name": "[07.14] CONTRABASS 소개 및 기능 교육",
-      "url": ""
-    }
-  ],
+  "downloads": [],
   "tromboneServices": [
     {
       "no": 0,
