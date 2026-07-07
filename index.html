@@ -379,6 +379,46 @@
       margin-top: auto;
       border-top: 1px solid var(--card-border);
     }
+
+    /* -------------------------------------------------------------
+       Downloads Custom Badges
+       ------------------------------------------------------------- */
+    .date-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+    }
+    .date-badge.active {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .date-badge.upcoming {
+      background-color: rgba(245, 158, 11, 0.15);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .download-card-item.disabled {
+      opacity: 0.75;
+      background: rgba(241, 245, 249, 0.4);
+      border: 1px dashed var(--card-border);
+      cursor: not-allowed;
+    }
+    [data-theme="dark"] .download-card-item.disabled {
+      background: rgba(15, 23, 42, 0.3);
+    }
+    .download-btn.disabled {
+      background: var(--text-muted) !important;
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -848,21 +888,57 @@
         }
       }
 
-      // 6) Downloads List (Read-only card items)
+      // 6) Downloads List (Read-only card items with date checks)
       const dlGrid = document.getElementById('user-download-list');
       dlGrid.innerHTML = '';
       if (!appState.downloads || appState.downloads.length === 0) {
         dlGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">등록된 교육 교재가 없습니다.</div>`;
       } else {
+        // 오늘 날짜 계산 (KST 기준 YYYY-MM-DD 형식)
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+
         appState.downloads.forEach(dl => {
           const item = document.createElement('div');
-          item.className = 'download-card-item';
+          
+          // 날짜 비교 (날짜가 명시되어 있지 않은 교재는 상시 오픈)
+          const isToday = !dl.date || dl.date === todayStr;
+          
+          item.className = `download-card-item${isToday ? '' : ' disabled'}`;
+
+          // 날짜 뱃지 생성
+          let dateBadge = '';
+          if (dl.date) {
+            const dateParts = dl.date.split('-');
+            const displayDate = dateParts.length === 3 ? `${parseInt(dateParts[1], 10)}/${parseInt(dateParts[2], 10)}` : dl.date;
+            dateBadge = `<span class="date-badge ${isToday ? 'active' : 'upcoming'}">${displayDate} ${isToday ? '오늘 교육' : '오픈 대기'}</span>`;
+          } else {
+            dateBadge = `<span class="date-badge active">상시 오픈</span>`;
+          }
+
           item.innerHTML = `
-            <div style="font-weight: 600; font-size: 0.95rem; line-height: 1.4; color: var(--text-primary);">${escapeHTML(dl.name)}</div>
-            <a href="${escapeHTML(dl.url)}" target="_blank" class="download-btn" style="text-decoration: none;">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-              다운로드
-            </a>
+            <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; gap: 0.75rem;">
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  ${dateBadge}
+                </div>
+                <div style="font-weight: 600; font-size: 0.95rem; line-height: 1.4; color: var(--text-primary);">${escapeHTML(dl.name)}</div>
+              </div>
+              ${isToday ? `
+                <a href="${escapeHTML(dl.url)}" target="_blank" class="download-btn" style="text-decoration: none;">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  다운로드
+                </a>
+              ` : `
+                <button class="download-btn disabled" disabled>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                  교육 당일 오픈
+                </button>
+              `}
+            </div>
           `;
           dlGrid.appendChild(item);
         });

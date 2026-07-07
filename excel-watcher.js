@@ -13,6 +13,17 @@ console.log('==================================================');
 console.log('감시 파일:', EXCEL_FILE);
 console.log('출력 파일:', OUTPUT_FILE);
 
+
+function formatExcelDate(val) {
+  if (!val) return "";
+  const s = String(val).trim();
+  if (s.length === 6 && /^\d+$/.test(s)) {
+    // "260714" -> "2026-07-14"
+    return `20${s.substring(0, 2)}-${s.substring(2, 4)}-${s.substring(4, 6)}`;
+  }
+  return s;
+}
+
 function parseExcel(triggerPush = false) {
   if (!fs.existsSync(EXCEL_FILE)) {
     console.error('오류: 엑셀 파일이 존재하지 않습니다.');
@@ -150,11 +161,16 @@ function parseExcel(triggerPush = false) {
       const rows = XLSX.utils.sheet_to_json(dlSheet, { header: 1, defval: "" });
       rows.forEach((row, idx) => {
         if (idx < 1) return;
-        const name = String(row[0] || "").trim();
-        const url = String(row[1] || "").trim();
-        const visible = row[2] === true || String(row[2]).trim().toLowerCase() === "true" || String(row[2]).trim().toUpperCase() === "Y";
-        if (name !== "" && visible) {
-          academyData.downloads.push({ name, url });
+        const rawDate = row[0];
+        const name = String(row[1] || "").trim();
+        const url = String(row[2] || "").trim();
+        
+        if (name !== "") {
+          let dateStr = "";
+          if (rawDate !== undefined && rawDate !== null && rawDate !== "") {
+            dateStr = formatExcelDate(rawDate);
+          }
+          academyData.downloads.push({ date: dateStr, name, url });
         }
       });
     }
