@@ -488,14 +488,14 @@
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
             일일 출석체크
           </div>
-          <div style="display: flex; gap: 1.25rem; align-items: flex-start; margin-top: 0.5rem; flex-grow: 1;">
+          <div style="display: flex; gap: 1.25rem; align-items: stretch; margin-top: 0.5rem; height: 105px;">
             <div style="background: white; padding: 0.5rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; width: 105px; height: 105px; border: 1px solid var(--card-border); flex-shrink: 0; box-shadow: var(--glass-shadow);">
               <img id="user-qr-img" src="" alt="QR" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
-            <div style="display: flex; flex-direction: column; gap: 0.6rem; flex-grow: 1; height: 100%; justify-content: space-between;">
-              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.45;">스마트폰 카메라로 QR 코드를 스캔하거나 아래 버튼을 클릭하여 출석체크 페이지로 이동하세요.</p>
-              <a id="user-attendance-link" href="" target="_blank" class="download-btn" style="text-decoration: none; margin-top: auto;">
-                출석체크 바로가기
+            <div style="display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; justify-content: space-between; height: 105px;">
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.45;">스마트폰 카메라로 QR 코드를 스캔하거나 아래 버튼을 클릭하여<br>출석 체크 페이지로 이동하세요.</p>
+              <a id="user-attendance-link" href="" target="_blank" class="download-btn" style="text-decoration: none; margin-top: auto; padding: 0.5rem;">
+                출석 체크 바로가기
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
               </a>
             </div>
