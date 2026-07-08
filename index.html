@@ -143,6 +143,21 @@
       letter-spacing: 0.05em;
     }
 
+    /* Specific Header Contrast Tuning (OASIS Premium) */
+    header .logo-container img {
+      filter: brightness(0) invert(1); /* 어두운 오케스트로 로고를 빛나는 화이트 로고로 반전 */
+    }
+
+    header .logo-text h1 {
+      background: linear-gradient(to right, #ffffff 0%, #38BDF8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header .logo-text p {
+      color: #94A3B8 !important;
+    }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -161,10 +176,16 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .btn-toggle-theme:hover {
-      background: var(--primary-glow);
-      border-color: var(--primary);
-      color: var(--primary);
+    header .btn-toggle-theme {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    header .btn-toggle-theme:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: #38BDF8;
+      color: #38BDF8;
       transform: translateY(-2px);
     }
 
