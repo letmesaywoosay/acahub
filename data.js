@@ -342,12 +342,12 @@ const academyData = {
     {
       "date": "2026-07-28",
       "name": "[내부]CONTRABASS 솔루션 딥다이브 교육",
-      "url": ""
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZHa4XD-fplaymi5dzaKtcI?e=yoDIYd"
     },
     {
       "date": "2026-07-29",
       "name": "신규입사자 온보딩",
-      "url": ""
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZHa4XD-fplaymi5dzaKtcI?e=yoDIYd"
     }
   ],
   "practiceMaterials": [
