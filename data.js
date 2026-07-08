@@ -328,6 +328,11 @@ const academyData = {
       "date": "2026-07-15",
       "name": "VIOLA 소개 및 기능 교육",
       "url": "www.naver.com"
+    },
+    {
+      "date": "2026-07-21",
+      "name": "[고객사]CONTRABASS 소개 및 기능 교육",
+      "url": "www.naver.com"
     }
   ],
   "practiceMaterials": [
