@@ -290,6 +290,37 @@
       gap: 1.25rem;
     }
 
+    .download-grid.scrollable {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      gap: 1.25rem;
+      padding-bottom: 0.75rem;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+    }
+
+    .download-grid.scrollable::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .download-grid.scrollable::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+
+    .download-grid.scrollable::-webkit-scrollbar-thumb {
+      background: var(--text-muted);
+      border-radius: 4px;
+    }
+
+    .download-grid.scrollable .download-card-item {
+      flex: 0 0 280px;
+      white-space: normal; /* 내부 텍스트는 정상 줄바꿈 */
+    }
+
     .download-card-item {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -922,6 +953,21 @@
       const dlGrid = document.getElementById('user-download-list');
       if (dlGrid) {
         dlGrid.innerHTML = '';
+        
+        // 오늘 날짜 계산 (KST 기준 YYYY-MM-DD 형식)
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+
+        // 3개 초과 시 가로 스크롤링 클래스 주입
+        if (appState.downloads && appState.downloads.length > 3) {
+          dlGrid.classList.add('scrollable');
+        } else {
+          dlGrid.classList.remove('scrollable');
+        }
+
         if (!appState.downloads || appState.downloads.length === 0) {
           dlGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">등록된 교육 교재가 없습니다.</div>`;
         } else {
@@ -931,13 +977,6 @@
             'linear-gradient(135deg, #0F766E 0%, #115E59 100%)', // 티엘
             'linear-gradient(135deg, #4338CA 0%, #3730A3 100%)'  // 인디고
           ];
-
-          // 오늘 날짜 계산 (KST 기준 YYYY-MM-DD 형식)
-          const today = new Date();
-          const yyyy = today.getFullYear();
-          const mm = String(today.getMonth() + 1).padStart(2, '0');
-          const dd = String(today.getDate()).padStart(2, '0');
-          const todayStr = `${yyyy}-${mm}-${dd}`;
 
           appState.downloads.forEach((dl, idx) => {
             const item = document.createElement('div');
@@ -996,10 +1035,18 @@
         }
       }
 
-      // 6-2) Practice Materials List (Always active links)
+      // 6-2) Practice Materials List (Always active links, except CONTRABASS matching logic)
       const pmGrid = document.getElementById('user-practice-list');
       if (pmGrid) {
         pmGrid.innerHTML = '';
+
+        // 3개 초과 시 가로 스크롤링 클래스 주입
+        if (appState.practiceMaterials && appState.practiceMaterials.length > 3) {
+          pmGrid.classList.add('scrollable');
+        } else {
+          pmGrid.classList.remove('scrollable');
+        }
+
         if (!appState.practiceMaterials || appState.practiceMaterials.length === 0) {
           pmGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 1.5rem;">등록된 실습 자료가 없습니다.</div>`;
         } else {
@@ -1010,23 +1057,73 @@
             'linear-gradient(135deg, #0A192F 0%, #1E293B 100%)'  // 다크
           ];
 
+          // 오늘 날짜 계산 (KST 기준 YYYY-MM-DD 형식)
+          const today = new Date();
+          const yyyy = today.getFullYear();
+          const mm = String(today.getMonth() + 1).padStart(2, '0');
+          const dd = String(today.getDate()).padStart(2, '0');
+          const todayStr = `${yyyy}-${mm}-${dd}`;
+
+          // 오늘 날짜에 contrabass 가 포함되어 있고 활성화된 다운로드 교육이 있는지 여부 판단
+          const hasActiveContrabassToday = (appState.downloads || []).some(dl => {
+            const isToday = !dl.date || dl.date === todayStr;
+            const hasKeyword = String(dl.name || '').toLowerCase().includes('contrabass');
+            return isToday && hasKeyword;
+          });
+
           appState.practiceMaterials.forEach((pm, idx) => {
             const item = document.createElement('div');
-            item.className = 'download-card-item';
+            
+            const isContrabassMaterial = String(pm.name || '').toLowerCase().includes('contrabass');
+            // CONTRABASS 실습 자료는 오늘 활성화된 CONTRABASS 교육 교재가 있을 때만 활성화, 그 외 자료는 상시 오픈
+            const isPmActive = !isContrabassMaterial || hasActiveContrabassToday;
+
+            item.className = `download-card-item${isPmActive ? '' : ' disabled'}`;
             const grad = gradientPool[idx % gradientPool.length];
+
+            // 뱃지 및 버튼 렌더링 분기
+            let badgeHtml = '';
+            let buttonHtml = '';
+
+            if (isPmActive) {
+              badgeHtml = `<span class="date-badge active">실습 자료</span>`;
+              buttonHtml = `
+                <a href="${escapeHTML(pm.url)}" target="_blank" class="download-btn" style="text-decoration: none; background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%); border-color: var(--accent); margin-top: auto;">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  다운로드
+                </a>
+              `;
+            } else {
+              badgeHtml = `<span class="date-badge upcoming">오픈 대기</span>`;
+              buttonHtml = `
+                <button class="download-btn disabled" disabled style="margin-top: auto;">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                  교육 당일 오픈
+                </button>
+              `;
+            }
 
             item.innerHTML = `
               <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; gap: 0.75rem;">
                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                  <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <span class="date-badge active">실습 자료</span>
+                  <!-- Premium Thumbnail Area (140px) -->
+                  <div class="card-thumbnail-area" style="height: 140px; background: ${grad}; border-radius: 12px 12px 0 0; position: relative; overflow: hidden; margin: -1.5rem -1.5rem 1rem -1.5rem;">
+                    <!-- Target Badge -->
+                    <div style="position: absolute; top: 12px; left: 12px; background: rgba(0, 0, 0, 0.45); color: #ffffff; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; backdrop-filter: blur(4px);">
+                      실습 자료
+                    </div>
+                    <!-- Emoticon Badge -->
+                    <div style="position: absolute; bottom: 12px; right: 12px; font-size: 2.25rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+                      💻
+                    </div>
                   </div>
-                  <div style="font-weight: 600; font-size: 0.95rem; line-height: 1.4; color: var(--text-primary);">${escapeHTML(pm.name)}</div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem;">
+                    ${badgeHtml}
+                  </div>
+                  <div style="font-weight: 600; font-size: 0.95rem; line-height: 1.4; color: var(--text-primary); margin-bottom: 0.5rem;">${escapeHTML(pm.name)}</div>
                 </div>
-                <a href="${escapeHTML(pm.url)}" target="_blank" class="download-btn" style="text-decoration: none; background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%); border-color: var(--accent);">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                  다운로드
-                </a>
+                ${buttonHtml}
               </div>
             `;
             pmGrid.appendChild(item);
