@@ -685,9 +685,22 @@
         </div>
       </div>
 
-      <!-- 5.5. Satisfaction Survey Section -->
+      <!-- 5.5. Satisfaction Survey & Checkout Section -->
       <div class="dashboard-card" style="margin-bottom: 2.5rem; display: flex; flex-direction: column;" id="user-survey-section">
-        <div class="card-title">
+        <!-- 5.5-A. Checkout Section -->
+        <div class="card-title" style="margin-bottom: 1rem;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          퇴실 체크
+        </div>
+        <div style="display: flex; gap: 1.25rem; align-items: stretch; margin-top: 0.5rem; height: 105px; margin-bottom: 2.25rem;" id="checkout-container">
+          <!-- Dynamically populated by JS based on 3 PM activation policy -->
+        </div>
+
+        <!-- Separation Line -->
+        <div style="border-top: 1px solid var(--card-border); margin-bottom: 1.75rem;"></div>
+
+        <!-- 5.5-B. Satisfaction Survey Section -->
+        <div class="card-title" style="margin-bottom: 1rem;">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           교육 만족도 조사
         </div>
@@ -1139,6 +1152,48 @@
             `;
             pmGrid.appendChild(item);
           });
+        }
+      }
+
+      // 6-2.5) Checkout Section (3 PM Activation rule - copies check-in links)
+      const checkoutContainer = document.getElementById('checkout-container');
+      if (checkoutContainer) {
+        checkoutContainer.innerHTML = '';
+        const now = new Date();
+        const isCheckoutActive = now.getHours() >= 15;
+
+        const qrSrc = appState.attendance ? (appState.attendance.qrUrl || appState.attendance.qr || '') : '';
+        const linkHref = appState.attendance ? (appState.attendance.link || appState.attendance.url || '') : '';
+
+        if (isCheckoutActive) {
+          checkoutContainer.innerHTML = `
+            <div style="background: white; padding: 0.5rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; width: 105px; height: 105px; border: 1px solid var(--card-border); flex-shrink: 0; box-shadow: var(--glass-shadow);">
+              <img src="${escapeHTML(qrSrc)}" alt="Checkout QR" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; justify-content: space-between; height: 105px;">
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.45;">오늘 교육 퇴실 시간입니다.<br>스마트폰 카메라로 QR 코드를 스캔하거나 아래 버튼을 클릭하여 퇴실 체크를 진행하세요.</p>
+              <a href="${escapeHTML(linkHref)}" target="_blank" class="download-btn" style="text-decoration: none; margin-top: auto; padding: 0.5rem; text-align: center;">
+                퇴실 체크 바로가기
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+          `;
+        } else {
+          checkoutContainer.innerHTML = `
+            <div style="background: white; padding: 0.5rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; width: 105px; height: 105px; border: 1px solid var(--card-border); flex-shrink: 0; position: relative;">
+              <img src="${escapeHTML(qrSrc)}" alt="Checkout QR" style="width: 100%; height: 100%; object-fit: contain; filter: blur(4px) grayscale(100%); opacity: 0.4;">
+              <div style="position: absolute; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.4); border-radius: 0.75rem; width: 100%; height: 100%; color: white; top: 0; left: 0;">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; justify-content: space-between; height: 105px;">
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.45;">오늘 교육 퇴실 체크는 오후 3시부터 참여 가능합니다.<br>퇴실 시간에 맞춰 퇴실 체크가 활성화됩니다.</p>
+              <button class="download-btn disabled" disabled style="margin-top: auto; padding: 0.5rem; text-align: center; cursor: not-allowed;">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                오후 3시 오픈
+              </button>
+            </div>
+          `;
         }
       }
 
