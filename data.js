@@ -343,6 +343,11 @@ const academyData = {
       "date": "2026-07-28",
       "name": "[내부]CONTRABASS 솔루션 딥다이브 교육",
       "url": ""
+    },
+    {
+      "date": "2026-07-29",
+      "name": "신규입사자 온보딩",
+      "url": ""
     }
   ],
   "practiceMaterials": [
