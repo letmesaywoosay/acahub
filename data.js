@@ -338,6 +338,11 @@ const academyData = {
       "date": "2026-07-22",
       "name": "[고객사]CONTRABASS 소개 및 기능 교육",
       "url": "www.naver.com"
+    },
+    {
+      "date": "2026-07-28",
+      "name": "[내부]CONTRABASS 솔루션 딥다이브 교육",
+      "url": ""
     }
   ],
   "practiceMaterials": [
