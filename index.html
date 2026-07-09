@@ -1254,6 +1254,10 @@
       updateDropdownHighlight('sol-laptop-select');
       updateDropdownHighlight('sol-name-select');
       updateDropdownHighlight('tb-laptop-select');
+
+      // 8) PC 마우스 드래그 스크롤 활성화
+      enableDragScroll(document.getElementById('user-download-list'));
+      enableDragScroll(document.getElementById('user-practice-list'));
     }
 
     /* =========================================================
@@ -1267,6 +1271,60 @@
         console.error('복사 실패:', err);
         showToast('복사에 실패했습니다.', 'warning');
       });
+    }
+
+    function enableDragScroll(el) {
+      if (!el) return;
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      el.addEventListener('mousedown', (e) => {
+        // 드래그 대상 컨테이너가 scrollable 클래스를 갖고 있을 때만 작동
+        if (!el.classList.contains('scrollable')) return;
+        isDown = true;
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+        el.style.cursor = 'grabbing';
+        el.style.userSelect = 'none';
+      });
+
+      el.addEventListener('mouseleave', () => {
+        isDown = false;
+        if (el.classList.contains('scrollable')) {
+          el.style.cursor = 'grab';
+        }
+      });
+
+      el.addEventListener('mouseup', () => {
+        isDown = false;
+        if (el.classList.contains('scrollable')) {
+          el.style.cursor = 'grab';
+        }
+      });
+
+      el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.5; // 스크롤 감도
+        el.scrollLeft = scrollLeft - walk;
+      });
+
+      // 초기 커서 세팅 (만약 scrollable 클래스가 있다면 grab 커서 장착)
+      if (el.classList.contains('scrollable')) {
+        el.style.cursor = 'grab';
+      }
+
+      // MutationObserver를 사용해 동적으로 scrollable 클래스가 온/오프 될 때 커서 스타일 동적 연동
+      const observer = new MutationObserver(() => {
+        if (el.classList.contains('scrollable')) {
+          if (el.style.cursor !== 'grabbing') el.style.cursor = 'grab';
+        } else {
+          el.style.cursor = 'default';
+        }
+      });
+      observer.observe(el, { attributes: true, attributeFilter: ['class'] });
     }
 
     function showToast(message, type = 'success') {
