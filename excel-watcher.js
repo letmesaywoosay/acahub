@@ -226,14 +226,15 @@ function parseExcel(triggerPush = false) {
     const tbServiceSheet = workbook.Sheets['TROMBONE 서비스 접속 정보'];
     if (tbServiceSheet) {
       const rows = XLSX.utils.sheet_to_json(tbServiceSheet, { header: 1, defval: "" });
-      for (let idx = 1; idx < rows.length; idx++) {
+      for (let idx = 2; idx < rows.length; idx++) {
         const row = rows[idx];
         const vpnId = String(row[0] || "").trim();
         const userId = String(row[1] || "").trim();
         const bizCode = String(row[2] || "").trim();
         const gitRepo = String(row[3] || "").trim();
-        const env = String(row[4] || "").trim();
-        const url = String(row[5] || "").trim();
+        const gitRepoPw = String(row[4] || "").trim();
+        const env = String(row[5] || "").trim();
+        const url = String(row[6] || "").trim();
         
         if (vpnId.startsWith("handson-") || vpnId === "강사") {
           let no = 0;
@@ -244,8 +245,8 @@ function parseExcel(triggerPush = false) {
           }
           
           const nextRow = rows[idx + 1] || [];
-          const nextEnv = String(nextRow[4] || "").trim();
-          const nextUrl = String(nextRow[5] || "").trim();
+          const nextEnv = String(nextRow[5] || "").trim();
+          const nextUrl = String(nextRow[6] || "").trim();
           
           let stgUrl = "";
           let prdUrl = "";
@@ -253,13 +254,14 @@ function parseExcel(triggerPush = false) {
           if (env === "PRD") prdUrl = url;
           if (nextEnv === "STG") stgUrl = nextUrl;
           if (nextEnv === "PRD") prdUrl = nextUrl;
-
+ 
           academyData.tromboneServices.push({
             no,
             vpnId,
             userId,
             bizCode,
             gitRepo,
+            gitRepoPw,
             stgUrl,
             prdUrl
           });

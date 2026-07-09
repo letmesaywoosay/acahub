@@ -643,13 +643,14 @@
                 <th>VPN ID</th>
                 <th>User ID</th>
                 <th>업무코드</th>
-                <th>Git 저장소</th>
+                <th>Git 저장소 ID</th>
+                <th>Git 저장소 PW</th>
                 <th>접속 URL (STG)</th>
                 <th>접속 URL (PRD)</th>
               </tr>
             </thead>
             <tbody id="user-tb-services-list">
-              <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">노트북 번호를 선택하면 접속 정보가 표시됩니다.</td></tr>
+              <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">노트북 번호를 선택하면 접속 정보가 표시됩니다.</td></tr>
             </tbody>
           </table>
         </div>
@@ -1465,7 +1466,7 @@
       tbTbody.innerHTML = '';
 
       if (!selectedNo) {
-        tbTbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">노트북 번호를 선택하면 접속 정보가 표시됩니다.</td></tr>`;
+        tbTbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">노트북 번호를 선택하면 접속 정보가 표시됩니다.</td></tr>`;
         return;
       }
 
@@ -1474,7 +1475,7 @@
       const found = services.find(s => s.no === no);
 
       if (!found) {
-        tbTbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">선택하신 노트북 번호(${no}번)에 할당된 TROMBONE 서비스 정보가 없습니다.</td></tr>`;
+        tbTbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">선택하신 노트북 번호(${no}번)에 할당된 TROMBONE 서비스 정보가 없습니다.</td></tr>`;
         return;
       }
 
@@ -1505,7 +1506,17 @@
           <div class="vpn-credential-box">
             <span id="tb-git-0">${escapeHTML(found.gitRepo || '-')}</span>
             ${found.gitRepo ? `
-            <button class="btn-copy" onclick="copyToClipboard('tb-git-0', 'Git 저장소가 복사되었습니다.')" aria-label="Git 복사">
+            <button class="btn-copy" onclick="copyToClipboard('tb-git-0', 'Git 저장소 ID가 복사되었습니다.')" aria-label="Git ID 복사">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            </button>
+            ` : ''}
+          </div>
+        </td>
+        <td>
+          <div class="vpn-credential-box">
+            <span id="tb-gitpw-0">${escapeHTML(found.gitRepoPw || '-')}</span>
+            ${found.gitRepoPw ? `
+            <button class="btn-copy" onclick="copyToClipboard('tb-gitpw-0', 'Git 저장소 비밀번호가 복사되었습니다.')" aria-label="Git PW 복사">
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
             </button>
             ` : ''}
