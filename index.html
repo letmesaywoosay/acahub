@@ -321,6 +321,57 @@
       white-space: normal; /* 내부 텍스트는 정상 줄바꿈 */
     }
 
+    /* TROMBONE 서비스 접속 정보 하위 연동형(sub-card) 스타일 */
+    #section-trombone-services.sub-card {
+      margin-left: 2rem;
+      width: calc(100% - 2rem);
+      border-left: 4px solid var(--accent);
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (max-width: 768px) {
+      #section-trombone-services.sub-card {
+        margin-left: 1rem;
+        width: calc(100% - 1rem);
+      }
+    }
+
+    /* 연결용 L자형 점선 커넥터 */
+    #section-trombone-services.sub-card::before {
+      content: '';
+      position: absolute;
+      top: -2.5rem; /* 카드 사이 여백 */
+      left: -1.25rem;
+      width: 2px;
+      height: calc(2.5rem + 2rem); /* 수직선 */
+      border-left: 2px dashed var(--accent);
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    #section-trombone-services.sub-card::after {
+      content: '';
+      position: absolute;
+      top: 2rem;
+      left: -1.25rem;
+      width: 1.25rem;
+      height: 2px;
+      border-top: 2px dashed var(--accent);
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      #section-trombone-services.sub-card::before {
+        left: -0.75rem;
+      }
+      #section-trombone-services.sub-card::after {
+        left: -0.75rem;
+        width: 0.75rem;
+      }
+    }
+
     .download-card-item {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -1426,8 +1477,10 @@
       if (tbServiceCard) {
         if (selectedName.toUpperCase().includes('TROMBONE')) {
           tbServiceCard.style.display = 'block';
+          tbServiceCard.classList.add('sub-card');
         } else {
           tbServiceCard.style.display = 'none';
+          tbServiceCard.classList.remove('sub-card');
         }
       }
 
