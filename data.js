@@ -332,7 +332,7 @@ const academyData = {
     {
       "date": "2026-07-21",
       "name": "[파트너사]CONTRABASS 소개 및 기능 교육",
-      "url": ""
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgBl5W8IGDwUTIwFI6v1QhpKAVl_Qdeq1lpOLvM8lgK3-Uw?e=pJejqh"
     },
     {
       "date": "2026-07-22",
