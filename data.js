@@ -322,32 +322,32 @@ const academyData = {
     {
       "date": "2026-07-14",
       "name": "[파트너사]CONTRABASS 소개 및 기능 교육",
-      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZHa4XD-fplaymi5dzaKtcI?e=yoDIYd"
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgCBIBPxuolZQLyZDp4QQrZmATV-9i46e6T0jsQM4IySD6Q?e=geqmdX"
     },
     {
       "date": "2026-07-15",
       "name": "[파트너사]VIOLA 소개 및 기능 교육",
-      "url": "www.naver.com"
+      "url": ""
     },
     {
       "date": "2026-07-21",
       "name": "[고객사]CONTRABASS 소개 및 기능 교육",
-      "url": "www.naver.com"
+      "url": ""
     },
     {
       "date": "2026-07-22",
       "name": "[고객사]CONTRABASS 소개 및 기능 교육",
-      "url": "www.naver.com"
+      "url": ""
     },
     {
       "date": "2026-07-28",
       "name": "[내부]CONTRABASS 솔루션 딥다이브 교육",
-      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZHa4XD-fplaymi5dzaKtcI?e=yoDIYd"
+      "url": ""
     },
     {
       "date": "2026-07-29",
       "name": "신규입사자 온보딩",
-      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAHSydrRnpOS6wkpCuAp-jFAZHa4XD-fplaymi5dzaKtcI?e=yoDIYd"
+      "url": ""
     }
   ],
   "practiceMaterials": [
@@ -363,6 +363,7 @@ const academyData = {
       "userId": "user00",
       "bizCode": "USER99",
       "gitRepo": "EDU99",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31300/members",
       "prdUrl": "http://10.255.62.49:31310/members"
     },
@@ -372,6 +373,7 @@ const academyData = {
       "userId": "user1",
       "bizCode": "USER01",
       "gitRepo": "EDU01",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31301/members",
       "prdUrl": "http://10.255.62.49:31311/members"
     },
@@ -381,6 +383,7 @@ const academyData = {
       "userId": "user2",
       "bizCode": "USER02",
       "gitRepo": "EDU02",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31302/members",
       "prdUrl": "http://10.255.62.49:31312/members"
     },
@@ -390,6 +393,7 @@ const academyData = {
       "userId": "user3",
       "bizCode": "USER03",
       "gitRepo": "EDU03",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31303/members",
       "prdUrl": "http://10.255.62.49:31313/members"
     },
@@ -399,6 +403,7 @@ const academyData = {
       "userId": "user4",
       "bizCode": "USER04",
       "gitRepo": "EDU04",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31304/members",
       "prdUrl": "http://10.255.62.49:31314/members"
     },
@@ -408,6 +413,7 @@ const academyData = {
       "userId": "user5",
       "bizCode": "USER05",
       "gitRepo": "EDU05",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31305/members",
       "prdUrl": "http://10.255.62.49:31315/members"
     },
@@ -417,6 +423,7 @@ const academyData = {
       "userId": "user6",
       "bizCode": "USER06",
       "gitRepo": "EDU06",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31306/members",
       "prdUrl": "http://10.255.62.49:31316/members"
     },
@@ -426,6 +433,7 @@ const academyData = {
       "userId": "user7",
       "bizCode": "USER07",
       "gitRepo": "EDU07",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31307/members",
       "prdUrl": "http://10.255.62.49:31317/members"
     },
@@ -435,6 +443,7 @@ const academyData = {
       "userId": "user8",
       "bizCode": "USER08",
       "gitRepo": "EDU08",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31308/members",
       "prdUrl": "http://10.255.62.49:31318/members"
     },
@@ -443,7 +452,8 @@ const academyData = {
       "vpnId": "handson-9",
       "userId": "user10",
       "bizCode": "USER09",
-      "gitRepo": "EDU09",
+      "gitRepo": "EDU10",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31309/members",
       "prdUrl": "http://10.255.62.49:31319/members"
     },
@@ -452,7 +462,8 @@ const academyData = {
       "vpnId": "handson-10",
       "userId": "user11",
       "bizCode": "USER10",
-      "gitRepo": "EDU10",
+      "gitRepo": "EDU11",
+      "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31320/members",
       "prdUrl": "http://10.255.62.49:31321/members"
     }
