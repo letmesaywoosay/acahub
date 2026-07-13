@@ -321,22 +321,22 @@ const academyData = {
   "downloads": [
     {
       "date": "2026-07-14",
-      "name": "[파트너사]CONTRABASS 소개 및 기능 교육",
+      "name": "[고객사]CONTRABASS 소개 및 기능 교육",
       "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgCBIBPxuolZQLyZDp4QQrZmATV-9i46e6T0jsQM4IySD6Q?e=geqmdX"
     },
     {
       "date": "2026-07-15",
-      "name": "[파트너사]VIOLA 소개 및 기능 교육",
+      "name": "[고객사]VIOLA 소개 및 기능 교육",
       "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgBMiVC-RUCOTadlCoEtbrkHAUnfYjbMtLp8HxPN0kwRRYA?e=cxGPtg"
     },
     {
       "date": "2026-07-21",
-      "name": "[고객사]CONTRABASS 소개 및 기능 교육",
+      "name": "[파트너사]CONTRABASS 소개 및 기능 교육",
       "url": ""
     },
     {
       "date": "2026-07-22",
-      "name": "[고객사]CONTRABASS 소개 및 기능 교육",
+      "name": "[파트너사]CONTRABASS 소개 및 기능 교육",
       "url": ""
     },
     {
