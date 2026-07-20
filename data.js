@@ -340,13 +340,13 @@ const academyData = {
       "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgC6pWckq1-mSKTcy28l6wJPAWSFFsQxH39wxe-7v6r20r8?e=9Jnw5L"
     },
     {
-      "date": "2026-07-28",
-      "name": "[내부]CONTRABASS 솔루션 딥다이브 교육",
+      "date": "2026-07-27",
+      "name": "[내부]CONTRABASS 소개 및 기능 교육",
       "url": ""
     },
     {
-      "date": "2026-07-29",
-      "name": "신규입사자 온보딩",
+      "date": "2026-07-28",
+      "name": "[내부]VIOLA 소개 및 기능 교육",
       "url": ""
     }
   ],
