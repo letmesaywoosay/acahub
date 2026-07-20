@@ -336,7 +336,7 @@ const academyData = {
     },
     {
       "date": "2026-07-22",
-      "name": "[파트너사]CONTRABASS 소개 및 기능 교육",
+      "name": "[파트너사]VIOLA 소개 및 기능 교육",
       "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgC6pWckq1-mSKTcy28l6wJPAWSFFsQxH39wxe-7v6r20r8?e=9Jnw5L"
     },
     {
