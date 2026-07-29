@@ -391,25 +391,48 @@
       </div>
     </div>
 
-    <!-- 3.5. Trombone Nodeport Card -->
+    <!-- 3.5. Trombone Nodeport Card (Dropdown Version) -->
     <div class="dashboard-card">
       <div class="card-title">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--primary);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
         Trombone Nodeport
       </div>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th style="width: 34%;">User</th>
-              <th style="width: 33%;">STG (Nodeport)</th>
-              <th style="width: 33%;">PRD (Nodeport)</th>
-            </tr>
-          </thead>
-          <tbody id="nodeport-list-body">
-            <tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">데이터를 불러오는 중입니다...</td></tr>
-          </tbody>
-        </table>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.2rem; line-height:1.6;">
+        User 계정을 선택하시면 해당 계정의 STG 및 PRD Nodeport 포트 정보가 표시됩니다.
+      </p>
+      <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+        <label for="nodeport-user-select" style="font-size:0.9rem; font-weight:600; color:var(--text-secondary); white-space:nowrap;">User 선택</label>
+        <select id="nodeport-user-select" onchange="onNodeportUserChange(this.value)"
+          style="flex:1;min-width:180px;max-width:260px;background:var(--input-bg);border:1.5px solid var(--input-border);color:var(--text-primary);padding:0.6rem 1rem;border-radius:0.6rem;font-size:0.95rem;font-family:inherit;cursor:pointer;outline:none;transition:border-color 0.2s;">
+          <option value="">-- User 선택 --</option>
+        </select>
+      </div>
+
+      <div id="nodeport-result-box" style="display:none;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+          <div class="credential-box" style="flex-direction:column;align-items:flex-start;gap:0.4rem;padding:1rem 1.2rem;width:100%;">
+            <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;">STG (Nodeport)</span>
+            <div style="display:flex;align-items:center;gap:0.5rem;width:100%;">
+              <span id="nodeport-result-stg" style="font-size:1.05rem;font-weight:700;color:var(--text-primary);font-family:monospace;"></span>
+              <button class="btn-copy" onclick="copyText(document.getElementById('nodeport-result-stg').textContent, 'STG Nodeport가 복사되었습니다.')" aria-label="STG Port 복사" style="margin-left:auto;">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="credential-box" style="flex-direction:column;align-items:flex-start;gap:0.4rem;padding:1rem 1.2rem;width:100%;">
+            <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;">PRD (Nodeport)</span>
+            <div style="display:flex;align-items:center;gap:0.5rem;width:100%;">
+              <span id="nodeport-result-prd" style="font-size:1.05rem;font-weight:700;color:var(--text-primary);font-family:monospace;"></span>
+              <button class="btn-copy" onclick="copyText(document.getElementById('nodeport-result-prd').textContent, 'PRD Nodeport가 복사되었습니다.')" aria-label="PRD Port 복사" style="margin-left:auto;">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="nodeport-placeholder" style="text-align:center;padding:1.5rem 0;color:var(--text-muted);font-size:0.88rem;background:rgba(13,18,30,0.4);border-radius:12px;border:1px solid var(--input-border);">
+        User 계정을 선택하면 STG / PRD Nodeport 포트 정보가 표시됩니다.
       </div>
     </div>
 
@@ -625,37 +648,45 @@
         });
       }
 
-      // 5.4) Render Trombone Nodeports
-      const nodeports = data.adminTromboneNodeports || [];
-      if (nodeportListBody) {
-        if (nodeports.length === 0) {
-          nodeportListBody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">등록된 Nodeport 정보가 없습니다.</td></tr>`;
-        } else {
-          nodeportListBody.innerHTML = '';
-          nodeports.forEach((item) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td style="font-weight: 700; color: var(--text-primary); font-family: monospace;">${escapeHTML(item.user)}</td>
-              <td>
-                <div class="credential-box">
-                  <span>${escapeHTML(item.stg)}</span>
-                  <button class="btn-copy" onclick="copyText('${escapeHTML(item.stg)}', 'STG Nodeport(${escapeHTML(item.stg)})가 복사되었습니다.')" aria-label="STG Port 복사">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-                  </button>
-                </div>
-              </td>
-              <td>
-                <div class="credential-box">
-                  <span>${escapeHTML(item.prd)}</span>
-                  <button class="btn-copy" onclick="copyText('${escapeHTML(item.prd)}', 'PRD Nodeport(${escapeHTML(item.prd)})가 복사되었습니다.')" aria-label="PRD Port 복사">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-                  </button>
-                </div>
-              </td>
-            `;
-            nodeportListBody.appendChild(tr);
-          });
-        }
+      // 5.4) Render Trombone Nodeports Dropdown Options
+      const nodeportSelect = document.getElementById('nodeport-user-select');
+      if (nodeportSelect) {
+        while (nodeportSelect.options.length > 1) nodeportSelect.remove(1);
+        const nodeports = data.adminTromboneNodeports || [];
+        nodeports.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.user;
+          opt.textContent = item.user;
+          nodeportSelect.appendChild(opt);
+        });
+      }
+    }
+
+    // 5.5) Handle Nodeport User Dropdown Selection
+    function onNodeportUserChange(selectedUser) {
+      const resultBox = document.getElementById('nodeport-result-box');
+      const placeholder = document.getElementById('nodeport-placeholder');
+      const stgElem = document.getElementById('nodeport-result-stg');
+      const prdElem = document.getElementById('nodeport-result-prd');
+
+      if (!selectedUser) {
+        resultBox.style.display = 'none';
+        placeholder.style.display = 'block';
+        return;
+      }
+
+      const data = window.academyData || window.ACADEMY_DATA;
+      const nodeports = data ? (data.adminTromboneNodeports || []) : [];
+      const matched = nodeports.find(item => item.user === selectedUser);
+
+      if (matched) {
+        stgElem.textContent = matched.stg || '-';
+        prdElem.textContent = matched.prd || '-';
+        resultBox.style.display = 'block';
+        placeholder.style.display = 'none';
+      } else {
+        resultBox.style.display = 'none';
+        placeholder.style.display = 'block';
       }
     }
 
