@@ -1031,8 +1031,11 @@
         const dd = String(today.getDate()).padStart(2, '0');
         const todayStr = `${yyyy}-${mm}-${dd}`;
 
-        // 전체 교육교재 다운로드 목록 노출
-        const activeDownloads = appState.downloads || [];
+        // 오늘 날짜보다 하루 이상 지난 교육교재 숨김 처리
+        const activeDownloads = (appState.downloads || []).filter(dl => {
+          if (!dl.date) return true; // 상시 오픈 교재
+          return dl.date >= todayStr; // 오늘 날짜 또는 미래 날짜 교재만 표시
+        });
 
         // 3개 초과 시 가로 스크롤링 클래스 주입
         if (activeDownloads.length > 3) {
@@ -1053,14 +1056,15 @@
 
           activeDownloads.forEach((dl, idx) => {
             const item = document.createElement('div');
-            item.className = 'download-card-item';
+            const isToday = !dl.date || dl.date === todayStr;
+            item.className = `download-card-item${isToday ? '' : ' disabled'}`;
 
             // 날짜 뱃지 생성
             let dateBadge = '';
             if (dl.date) {
               const dateParts = dl.date.split('-');
               const displayDate = dateParts.length === 3 ? `${parseInt(dateParts[1], 10)}/${parseInt(dateParts[2], 10)}` : dl.date;
-              dateBadge = `<span class="date-badge active">${displayDate} 교육</span>`;
+              dateBadge = `<span class="date-badge ${isToday ? 'active' : 'upcoming'}">${displayDate} ${isToday ? '오늘 교육' : '오픈 대기'}</span>`;
             } else {
               dateBadge = `<span class="date-badge active">상시 오픈</span>`;
             }
@@ -1088,10 +1092,17 @@
                   <div style="font-weight: 600; font-size: 0.95rem; line-height: 1.4; color: var(--text-primary); margin-bottom: 0.5rem;">${escapeHTML(dl.name)}</div>
                 </div>
                 
-                <a href="${escapeHTML(dl.url)}" target="_blank" class="download-btn" style="text-decoration: none; margin-top: auto;">
-                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                  다운로드
-                </a>
+                ${isToday ? `
+                  <a href="${escapeHTML(dl.url)}" target="_blank" class="download-btn" style="text-decoration: none; margin-top: auto;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    다운로드
+                  </a>
+                ` : `
+                  <button class="download-btn disabled" disabled style="margin-top: auto;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    교육 당일 오픈
+                  </button>
+                `}
               </div>
             `;
             dlGrid.appendChild(item);
