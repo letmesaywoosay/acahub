@@ -57,7 +57,10 @@ function parseExcel(triggerPush = false) {
       downloads: [],
       practiceMaterials: [],
       tromboneServices: [],
-      middlewares: []
+      middlewares: [],
+      adminVpns: [],
+      adminSolutions: [],
+      adminMiddlewares: []
     };
 
     // 1. 기본정보 시트 파싱
@@ -267,6 +270,52 @@ function parseExcel(triggerPush = false) {
           });
           
           idx++; // PRD 행 스킵
+        }
+      }
+    }
+
+    // 7. (관리자)아카데미 VPN 계정 목록 시트 파싱
+    const adminVpnSheet = workbook.Sheets['(관리자)아카데미 VPN 계정 목록'];
+    if (adminVpnSheet) {
+      const rows = XLSX.utils.sheet_to_json(adminVpnSheet, { header: 1, defval: "" });
+      for (let idx = 4; idx < rows.length; idx++) {
+        const row = rows[idx];
+        const id = String(row[0] || "").trim();
+        const pw = String(row[1] || "").trim();
+        if (id !== "") {
+          academyData.adminVpns.push({ id, pw });
+        }
+      }
+    }
+
+    // 8. (관리자)솔루션 접속 정보 시트 파싱
+    const adminSolSheet = workbook.Sheets['(관리자)솔루션 접속 정보'];
+    if (adminSolSheet) {
+      const rows = XLSX.utils.sheet_to_json(adminSolSheet, { header: 1, defval: "" });
+      for (let idx = 1; idx < rows.length; idx++) {
+        const row = rows[idx];
+        const name = String(row[0] || "").trim();
+        const id = String(row[1] || "").trim();
+        const pw = String(row[2] || "").trim();
+        const host = String(row[3] || "").trim();
+        const domain = String(row[4] || "").trim();
+        if (name !== "") {
+          academyData.adminSolutions.push({ name, id, pw, host, domain });
+        }
+      }
+    }
+
+    // 9. (관리자)Trombone 미들웨어 접속정보 시트 파싱
+    const adminMwSheet = workbook.Sheets['(관리자)Trombone 미들웨어 접속정보'];
+    if (adminMwSheet) {
+      const rows = XLSX.utils.sheet_to_json(adminMwSheet, { header: 1, defval: "" });
+      for (let idx = 1; idx < rows.length; idx++) {
+        const row = rows[idx];
+        const name = String(row[0] || "").trim();
+        const id = String(row[1] || "").trim();
+        const pw = String(row[2] || "").trim();
+        if (name !== "") {
+          academyData.adminMiddlewares.push({ name, id, pw });
         }
       }
     }

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아카데미 Hub - 강사 전용 관리자 대시보드 🔐</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #0B0F19;
+      --card-bg: rgba(20, 26, 43, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #F3F4F6;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      --primary: #0284C7;
+      --primary-hover: #0369A1;
+      --primary-glow: rgba(2, 132, 199, 0.15);
+      --accent: #0F766E;
+      --accent-hover: #115E59;
+      --accent-glow: rgba(15, 118, 110, 0.15);
+      --input-bg: rgba(13, 18, 30, 0.8);
+      --input-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      --toast-bg: rgba(15, 23, 42, 0.95);
+      --toast-border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 10% 20%, rgba(2, 132, 199, 0.08) 0px, transparent 50%),
+        radial-gradient(at 90% 80%, rgba(15, 118, 110, 0.08) 0px, transparent 50%);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      flex-grow: 1;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 0 15px rgba(2, 132, 199, 0.3);
+    }
+
+    .logo-text h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFFFFF 30%, #9CA3AF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    .btn-user-view {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      color: var(--text-primary);
+      padding: 0.65rem 1.2rem;
+      border-radius: 0.75rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-user-view:hover {
+      border-color: var(--primary);
+      background: var(--primary-glow);
+      transform: translateY(-1px);
+    }
+
+    /* Cards */
+    .dashboard-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: transform 0.2s ease;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid var(--primary);
+      padding-left: 0.75rem;
+    }
+
+    .card-title.accent-bar {
+      border-left-color: var(--accent);
+    }
+
+    /* Table styles */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--input-border);
+      background: rgba(13, 18, 30, 0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--input-border);
+      white-space: nowrap;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Credentials & utility buttons */
+    .credential-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      padding: 0.4rem 0.75rem;
+      border-radius: 0.5rem;
+      font-family: monospace;
+      font-size: 0.88rem;
+    }
+
+    .btn-copy {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+      border-radius: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-copy:hover {
+      color: var(--primary);
+      background: var(--primary-glow);
+    }
+
+    .host-box {
+      max-width: 320px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-family: monospace;
+      font-size: 0.82rem;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 0.35rem 0.65rem;
+      border-radius: 0.35rem;
+      border: 1px solid var(--input-border);
+      display: inline-block;
+    }
+
+    .host-box:hover {
+      border-color: var(--primary);
+      color: var(--text-primary);
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: white;
+      text-decoration: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: opacity 0.2s ease;
+    }
+
+    .link-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Toast Notification */
+    #toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .toast {
+      background: var(--toast-bg);
+      border: 1.5px solid var(--toast-border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      color: var(--text-primary);
+      padding: 1rem 1.5rem;
+      border-radius: 0.75rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateY(1rem);
+      opacity: 0;
+      animation: toastIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      min-width: 280px;
+    }
+
+    @keyframes toastIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--card-border);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo-area">
+        <div class="logo-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <div class="logo-text">
+          <h1>아카데미 Hub</h1>
+          <p>Instructor Console</p>
+        </div>
+      </div>
+      <a href="/" class="btn-user-view">
+        일반 화면 바로가기
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </a>
+    </header>
+
+    <!-- 1. VPN Accounts Card -->
+    <div class="dashboard-card">
+      <div class="card-title">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--primary);"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        실습용 VPN 계정 목록 (강사/관리자용)
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40%;">ID</th>
+              <th style="width: 60%;">Password</th>
+            </tr>
+          </thead>
+          <tbody id="vpn-list-body">
+            <tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">데이터를 불러오는 중입니다...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2. Solutions Card -->
+    <div class="dashboard-card">
+      <div class="card-title accent-bar">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--accent);"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        관리자 솔루션 접속 정보
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>솔루션</th>
+              <th>계정(ID)</th>
+              <th>계정(PW)</th>
+              <th>호스트 등록 (클릭 시 복사)</th>
+              <th>접속 주소</th>
+            </tr>
+          </thead>
+          <tbody id="sol-list-body">
+            <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">데이터를 불러오는 중입니다...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3. Trombone Middleware Card -->
+    <div class="dashboard-card">
+      <div class="card-title">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--primary);"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Trombone 미들웨어 접속정보 (GitLab/Jenkins 등)
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40%;">미들웨어</th>
+              <th style="width: 30%;">계정(ID)</th>
+              <th style="width: 30%;">계정(PW)</th>
+            </tr>
+          </thead>
+          <tbody id="mw-list-body">
+            <tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">데이터를 불러오는 중입니다...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 OKESTRO Academy. All rights reserved. (Instructor Dashboard)
+  </footer>
+
+  <!-- Toast Notification Wrapper -->
+  <div id="toast-container"></div>
+
+  <!-- Load Data -->
+  <script src="data.js"></script>
+  <script>
+    // 1. DOM elements
+    const vpnListBody = document.getElementById('vpn-list-body');
+    const solListBody = document.getElementById('sol-list-body');
+    const mwListBody = document.getElementById('mw-list-body');
+
+    // 2. Escape HTML
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>'"]/g, 
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+      );
+    }
+
+    // 3. ClipBoard Copy Utility
+    function copyText(text, successMessage) {
+      if (!text || text === '-') {
+        showToast('복사할 데이터가 없습니다.', 'warning');
+        return;
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMessage || '복사 완료!');
+      }).catch(err => {
+        console.error('Copy failed:', err);
+        showToast('복사에 실패했습니다.', 'warning');
+      });
+    }
+
+    // 4. Toast alert popup
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      
+      const checkIcon = `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #10B981;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+      const warningIcon = `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: #F59E0B;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+      
+      toast.innerHTML = `
+        ${type === 'success' ? checkIcon : warningIcon}
+        <span>${escapeHTML(message)}</span>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.animation = 'toastOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+        toast.addEventListener('animationend', () => {
+          toast.remove();
+        });
+      }, 2500);
+    }
+
+    // CSS Keyframe injected dynamically for Toast Fade out
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes toastOut {
+        to {
+          transform: translateY(-1rem);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // 5. Initialize & Render Admin views
+    function renderAdminDashboard() {
+      const data = window.academyData || window.ACADEMY_DATA;
+      if (!data) {
+        console.error('Data not loaded properly.');
+        return;
+      }
+
+      // 5.1) Render VPN accounts
+      const vpns = data.adminVpns || [];
+      if (vpns.length === 0) {
+        vpnListBody.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">등록된 VPN 계정이 없습니다.</td></tr>`;
+      } else {
+        vpnListBody.innerHTML = '';
+        vpns.forEach((vpn, idx) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>
+              <div class="credential-box">
+                <span id="vpn-id-${idx}">${escapeHTML(vpn.id)}</span>
+                <button class="btn-copy" onclick="copyText('${escapeHTML(vpn.id)}', 'VPN ID가 복사되었습니다.')" aria-label="ID 복사">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="credential-box">
+                <span id="vpn-pw-${idx}">${escapeHTML(vpn.pw)}</span>
+                <button class="btn-copy" onclick="copyText('${escapeHTML(vpn.pw)}', 'VPN 비밀번호가 복사되었습니다.')" aria-label="비밀번호 복사">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                </button>
+              </div>
+            </td>
+          `;
+          vpnListBody.appendChild(tr);
+        });
+      }
+
+      // 5.2) Render Solutions
+      const sols = data.adminSolutions || [];
+      if (sols.length === 0) {
+        solListBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">등록된 솔루션 접속 정보가 없습니다.</td></tr>`;
+      } else {
+        solListBody.innerHTML = '';
+        sols.forEach((sol, idx) => {
+          const tr = document.createElement('tr');
+          const finalUrl = sol.domain ? (sol.domain.startsWith('http') ? sol.domain : 'https://' + sol.domain) : '#';
+          tr.innerHTML = `
+            <td style="font-weight: 700; color: var(--text-primary);">${escapeHTML(sol.name)}</td>
+            <td>
+              <div class="credential-box">
+                <span>${escapeHTML(sol.id)}</span>
+                <button class="btn-copy" onclick="copyText('${escapeHTML(sol.id)}', '솔루션 ID가 복사되었습니다.')" aria-label="ID 복사">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="credential-box">
+                <span>${escapeHTML(sol.pw)}</span>
+                <button class="btn-copy" onclick="copyText('${escapeHTML(sol.pw)}', '솔루션 비밀번호가 복사되었습니다.')" aria-label="비밀번호 복사">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="host-box" onclick="copyText('${escapeHTML(sol.host)}', '호스트 등록 스크립트가 복사되었습니다.')" title="클릭하여 복사">
+                ${escapeHTML(sol.host || '-')}
+              </div>
+            </td>
+            <td>
+              ${sol.domain ? `
+                <a href="${escapeHTML(finalUrl)}" target="_blank" class="link-btn">
+                  접속하기
+                  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              ` : '-'}
+            </td>
+          `;
+          solListBody.appendChild(tr);
+        });
+      }
+
+      // 5.3) Render Middlewares
+      const mws = data.adminMiddlewares || [];
+      if (mws.length === 0) {
+        mwListBody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">등록된 미들웨어 정보가 없습니다.</td></tr>`;
+      } else {
+        mwListBody.innerHTML = '';
+        mws.forEach((mw, idx) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td style="font-weight: 700; color: var(--text-primary); text-transform: uppercase;">${escapeHTML(mw.name)}</td>
+            <td>
+              <div class="credential-box">
+                <span>${escapeHTML(mw.id)}</span>
+                <button class="btn-copy" onclick="copyText('${escapeHTML(mw.id)}', '미들웨어 ID가 복사되었습니다.')" aria-label="ID 복사">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="credential-box">
+                <span>${escapeHTML(mw.pw)}</span>
+                <button class="btn-copy" onclick="copyText('${escapeHTML(mw.pw)}', '미들웨어 비밀번호가 복사되었습니다.')" aria-label="비밀번호 복사">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                </button>
+              </div>
+            </td>
+          `;
+          mwListBody.appendChild(tr);
+        });
+      }
+    }
+
+    // 6. Run on DOM content loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAdminDashboard();
+    });
+  </script>
+</body>
+</html>
