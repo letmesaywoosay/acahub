@@ -473,7 +473,82 @@ const academyData = {
       "prdUrl": "http://10.255.62.49:31321/members"
     }
   ],
-  "middlewares": []
+  "middlewares": [],
+  "adminVpns": [
+    {
+      "id": "js.park",
+      "pw": "kZsKnumI"
+    },
+    {
+      "id": "ws.choi",
+      "pw": "bGcISihA"
+    },
+    {
+      "id": "hy.shin",
+      "pw": "nmJjGQLL"
+    },
+    {
+      "id": "yh.kim",
+      "pw": "Okestro2018!"
+    }
+  ],
+  "adminSolutions": [
+    {
+      "name": "CONTRABASS/VIOLA 3.0.4",
+      "id": "admin",
+      "pw": "okestro2018@",
+      "host": "10.255.62.225 edu.console.304bf.okestro.cloud harbor.okestro.cloud",
+      "domain": "https://edu.console.304bf.okestro.cloud"
+    },
+    {
+      "name": "CONTRABASS/VIOLA 3.0.5",
+      "id": "bootfactory",
+      "pw": "Okestro2018@",
+      "host": "10.255.62.69 edu.console.bf.okestro.cloud",
+      "domain": "305edu.console.trombone.okestro.cloud"
+    },
+    {
+      "name": "TROMBONE 3.0.5",
+      "id": "sysadmin",
+      "pw": "Cloud1234!",
+      "host": "10.255.62.49 minio-console.305edu.console.trombone.okestro.cloud alertmanager.305edu.console.trombone.okestro.cloud argocd.305edu.console.trombone.okestro.cloud gitlab.305edu.console.trombone.okestro.cloud grafana.305edu.console.trombone.okestro.cloud harbor.305edu.console.trombone.okestro.cloud jenkins.305edu.console.trombone.okestro.cloud 305edu.console.trombone.okestro.cloud minio-console.305edu.console.trombone.okestro.cloud nexus.305edu.console.trombone.okestro.cloud prometheus.305edu.console.trombone.okestro.cloud sonarqube.305edu.console.trombone.okestro.cloud",
+      "domain": "https://305edu.console.trombone.okestro.cloud/"
+    },
+    {
+      "name": "OKESTRO CMP 3.0.5",
+      "id": "maestro",
+      "pw": "Okestro2018!",
+      "host": "10.255.62.57 edu.console.cmp.okestro.cloud edu.cmp.okestro.cloud",
+      "domain": "- 관리자 : https://edu.console.cmp.okestro.cloud\r\n- 사용자 : https://edu.cmp.okestro.cloud"
+    }
+  ],
+  "adminMiddlewares": [
+    {
+      "name": "gitlab",
+      "id": "root",
+      "pw": "cloud1234"
+    },
+    {
+      "name": "jenkins",
+      "id": "admin",
+      "pw": "cloud1234"
+    },
+    {
+      "name": "argocd",
+      "id": "admin",
+      "pw": "Cloud1234!@"
+    },
+    {
+      "name": "nexus",
+      "id": "admin",
+      "pw": "cloud1234"
+    },
+    {
+      "name": "harbor",
+      "id": "admin",
+      "pw": "Cloud1234!@"
+    }
+  ]
 };
 
 window.ACADEMY_DATA = academyData;
