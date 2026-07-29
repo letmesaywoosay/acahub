@@ -358,7 +358,7 @@
               <th>솔루션</th>
               <th>계정(ID)</th>
               <th>계정(PW)</th>
-              <th>호스트 등록 (클릭 시 복사)</th>
+              <th title="C:\Windows\System32\drivers 경로의 hosts 파일에 붙여넣기 하세요.">호스트 등록 (클릭 시 복사)</th>
               <th>접속 주소</th>
             </tr>
           </thead>
@@ -537,7 +537,7 @@
               </div>
             </td>
             <td>
-              <div class="host-box" onclick="copyText('${escapeHTML(sol.host)}', '호스트 등록 스크립트가 복사되었습니다.')" title="클릭하여 복사">
+              <div class="host-box" onclick="copyText('${escapeHTML(sol.host)}', '호스트 등록 스크립트가 복사되었습니다.')" title="C:\Windows\System32\drivers 경로의 hosts 파일에 붙여넣기 하세요.">
                 ${escapeHTML(sol.host || '-')}
               </div>
             </td>
