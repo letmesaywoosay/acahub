@@ -353,6 +353,11 @@ const academyData = {
       "date": "2026-07-29",
       "name": "[내부] 온보딩 제품교육",
       "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgA_IZOLdByoTZ3BxYsPq0TbAYfW-iQugsnPW4SoyythDrk?e=iGX2bh"
+    },
+    {
+      "date": "2026-07-29",
+      "name": "[내부] 온보딩 제품교육222",
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgA_IZOLdByoTZ3BxYsPq0TbAYfW-iQugsnPW4SoyythDrk?e=iGX2bh"
     }
   ],
   "practiceMaterials": [
