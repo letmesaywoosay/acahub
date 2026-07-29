@@ -548,6 +548,68 @@ const academyData = {
       "id": "admin",
       "pw": "Cloud1234!@"
     }
+  ],
+  "adminTromboneNodeports": [
+    {
+      "user": "user00",
+      "stg": "31300",
+      "prd": "31310"
+    },
+    {
+      "user": "user01",
+      "stg": "31301",
+      "prd": "31311"
+    },
+    {
+      "user": "user02",
+      "stg": "31302",
+      "prd": "31312"
+    },
+    {
+      "user": "user03",
+      "stg": "31303",
+      "prd": "31313"
+    },
+    {
+      "user": "user04",
+      "stg": "31304",
+      "prd": "31314"
+    },
+    {
+      "user": "user05",
+      "stg": "31305",
+      "prd": "31315"
+    },
+    {
+      "user": "user06",
+      "stg": "31306",
+      "prd": "31316"
+    },
+    {
+      "user": "user07",
+      "stg": "31307",
+      "prd": "31317"
+    },
+    {
+      "user": "user08",
+      "stg": "31308",
+      "prd": "31318"
+    },
+    {
+      "user": "user09",
+      "stg": "31309",
+      "prd": "31319"
+    },
+    {
+      "user": "user10",
+      "stg": "31320",
+      "prd": "31321"
+    },
+    {
+      "user": "user11",
+      "stg": "31322",
+      "prd": "31323"
+    }
   ]
 };
 

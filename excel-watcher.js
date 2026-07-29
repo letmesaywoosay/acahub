@@ -60,7 +60,8 @@ function parseExcel(triggerPush = false) {
       middlewares: [],
       adminVpns: [],
       adminSolutions: [],
-      adminMiddlewares: []
+      adminMiddlewares: [],
+      adminTromboneNodeports: []
     };
 
     // 1. 기본정보 시트 파싱
@@ -316,6 +317,21 @@ function parseExcel(triggerPush = false) {
         const pw = String(row[2] || "").trim();
         if (name !== "") {
           academyData.adminMiddlewares.push({ name, id, pw });
+        }
+      }
+    }
+
+    // 10. (관리자)Trombone Nodeport 시트 파싱
+    const adminNodeportSheet = workbook.Sheets['(관리자)Trombone Nodeport'];
+    if (adminNodeportSheet) {
+      const rows = XLSX.utils.sheet_to_json(adminNodeportSheet, { header: 1, defval: "" });
+      for (let idx = 1; idx < rows.length; idx++) {
+        const row = rows[idx];
+        const user = String(row[0] || "").trim();
+        const stg = String(row[1] || "").trim();
+        const prd = String(row[2] || "").trim();
+        if (user !== "") {
+          academyData.adminTromboneNodeports.push({ user, stg, prd });
         }
       }
     }
