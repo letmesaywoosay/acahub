@@ -61,7 +61,8 @@ function parseExcel(triggerPush = false) {
       adminVpns: [],
       adminSolutions: [],
       adminMiddlewares: [],
-      adminTromboneNodeports: []
+      adminTromboneNodeports: [],
+      adminOtherInfos: []
     };
 
     // 1. 기본정보 시트 파싱
@@ -332,6 +333,22 @@ function parseExcel(triggerPush = false) {
         const prd = String(row[2] || "").trim();
         if (user !== "") {
           academyData.adminTromboneNodeports.push({ user, stg, prd });
+        }
+      }
+    }
+
+    // 11. (관리자)기타 접속정보 시트 파싱
+    const adminOtherSheet = workbook.Sheets['(관리자)기타 접속정보'];
+    if (adminOtherSheet) {
+      const rows = XLSX.utils.sheet_to_json(adminOtherSheet, { header: 1, defval: "" });
+      for (let idx = 1; idx < rows.length; idx++) {
+        const row = rows[idx];
+        const site = String(row[0] || "").trim();
+        const id = String(row[1] || "").trim();
+        const pw = String(row[2] || "").trim();
+        const url = String(row[3] || "").trim();
+        if (site !== "") {
+          academyData.adminOtherInfos.push({ site, id, pw, url });
         }
       }
     }
