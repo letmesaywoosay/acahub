@@ -347,8 +347,8 @@ function parseExcel(triggerPush = false) {
         const id = String(row[1] || "").trim();
         const pw = String(row[2] || "").trim();
         const url = String(row[3] || "").trim();
-        if (site !== "") {
-          academyData.adminOtherInfos.push({ site, id, pw, url });
+        if (site !== "" || id !== "" || pw !== "" || url !== "") {
+          academyData.adminOtherInfos.push({ site: site || "-", id: id || "-", pw: pw || "-", url });
         }
       }
     }

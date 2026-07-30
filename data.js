@@ -647,6 +647,12 @@ const academyData = {
       "id": "admin",
       "pw": "Cloud1234!@",
       "url": "https://harbor.305edu.console.trombone.okestro.cloud/harbor/projects"
+    },
+    {
+      "site": "-",
+      "id": "-",
+      "pw": "-",
+      "url": "http://harbor.okestro.cloud/harbor/projects"
     }
   ]
 };
