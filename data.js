@@ -640,6 +640,26 @@ const academyData = {
       "stg": "31322",
       "prd": "31323"
     }
+  ],
+  "adminOtherInfos": [
+    {
+      "site": "Harvor",
+      "id": "admin",
+      "pw": "Cloud1234!@",
+      "url": "https://harbor.305edu.console.trombone.okestro.cloud/harbor/projects"
+    },
+    {
+      "site": "아카데미 허브",
+      "id": "-",
+      "pw": "-",
+      "url": "https://okestroacahub.vercel.app"
+    },
+    {
+      "site": "아카데미 허브 강사계정",
+      "id": "-",
+      "pw": "-",
+      "url": "https://okestroacahub.vercel.app/admin"
+    }
   ]
 };
 
