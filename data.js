@@ -375,14 +375,24 @@ const academyData = {
       "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgA_IZOLdByoTZ3BxYsPq0TbAYfW-iQugsnPW4SoyythDrk?e=iGX2bh"
     },
     {
-      "date": "2026-07-29",
-      "name": "[내부] 온보딩 제품교육222",
-      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgA_IZOLdByoTZ3BxYsPq0TbAYfW-iQugsnPW4SoyythDrk?e=iGX2bh"
+      "date": "2026-08-11",
+      "name": "[고객사]CONTRABASS 소개 및 기능 교육",
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgB9iV0PmZzyRY-OX9_l3D7vAdoSOalS0_nW4EuL1EQk16I?e=dUjOQs"
     },
     {
-      "date": "2026-07-29",
-      "name": "[내부] 온보딩 제품교육222",
-      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgA_IZOLdByoTZ3BxYsPq0TbAYfW-iQugsnPW4SoyythDrk?e=iGX2bh"
+      "date": "2026-08-12",
+      "name": "[고객사]VIOLA 소개 및 기능 교육",
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgD2-Cw1hAmtRLRZS6xQPynlAQSBcVBpAkyIeyOHZ55FjV0?e=99uB1U"
+    },
+    {
+      "date": "2026-08-13",
+      "name": "[고객사]TROMBONE 소개 및 기능 교육",
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgAeSH61MkiqTKogyAAEH0v1AQNWhsstioRHFrdxMBQ7FN8?e=7qWeI5"
+    },
+    {
+      "date": "2026-08-20",
+      "name": "[고객사]TROMBONE 소개 및 기능 교육",
+      "url": ""
     }
   ],
   "practiceMaterials": [
@@ -653,6 +663,30 @@ const academyData = {
       "id": "-",
       "pw": "-",
       "url": "http://harbor.okestro.cloud/harbor/projects"
+    },
+    {
+      "site": "3.0.4 Harbor",
+      "id": "admin",
+      "pw": "Cloud1234",
+      "url": "harbor.okestro.cloud"
+    },
+    {
+      "site": "TROMBONE sonarqube",
+      "id": "admin",
+      "pw": "Cloud1234!@#$",
+      "url": ""
+    },
+    {
+      "site": "-",
+      "id": "-",
+      "pw": "/",
+      "url": ""
+    },
+    {
+      "site": "-",
+      "id": "-",
+      "pw": "TROMBONE sonarqube  //",
+      "url": ""
     }
   ]
 };
