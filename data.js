@@ -316,6 +316,11 @@ const academyData = {
       "no": 10,
       "id": "rydbr2o26-10",
       "pw": "vw1W7i48l47Y"
+    },
+    {
+      "no": 11,
+      "id": "hy.shin",
+      "pw": "nmJjGQLL"
     }
   ],
   "downloads": [
