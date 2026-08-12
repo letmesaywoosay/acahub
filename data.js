@@ -251,8 +251,8 @@ const academyData = {
     },
     {
       "name": "TROMBONE 3.0.5",
-      "no": null,
-      "id": "",
+      "no": 11,
+      "id": "edu12",
       "pw": "Okestro2026!",
       "url": "https://305edu.console.trombone.okestro.cloud/",
       "host": "10.255.62.49 minio-console.305edu.console.trombone.okestro.cloud alertmanager.305edu.console.trombone.okestro.cloud argocd.305edu.console.trombone.okestro.cloud gitlab.305edu.console.trombone.okestro.cloud grafana.305edu.console.trombone.okestro.cloud harbor.305edu.console.trombone.okestro.cloud jenkins.305edu.console.trombone.okestro.cloud 305edu.console.trombone.okestro.cloud minio-console.305edu.console.trombone.okestro.cloud nexus.305edu.console.trombone.okestro.cloud prometheus.305edu.console.trombone.okestro.cloud sonarqube.305edu.console.trombone.okestro.cloud"
