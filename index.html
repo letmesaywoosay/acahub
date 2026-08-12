@@ -973,7 +973,15 @@
       const solSelect = document.getElementById('sol-laptop-select');
       if (solSelect) {
         while (solSelect.options.length > 1) solSelect.remove(1);
-        for (let i = 1; i <= 10; i++) {
+        const laptopNos = new Set();
+        (appState.solutions || []).forEach(s => {
+          if (s.no) laptopNos.add(Number(s.no));
+        });
+        (appState.vpns || []).forEach(v => {
+          if (v.no) laptopNos.add(Number(v.no));
+        });
+        const maxNo = Math.max(10, ...Array.from(laptopNos));
+        for (let i = 1; i <= maxNo; i++) {
           const opt = document.createElement('option');
           opt.value = i;
           opt.textContent = `노트북 ${i}번`;
@@ -1011,7 +1019,18 @@
       const tbSelect = document.getElementById('tb-laptop-select');
       if (tbSelect) {
         while (tbSelect.options.length > 1) tbSelect.remove(1);
-        for (let i = 1; i <= 10; i++) {
+        const laptopNos = new Set();
+        (appState.tromboneServices || []).forEach(t => {
+          if (t.user) {
+            const numMatch = String(t.user).match(/\d+/);
+            if (numMatch) laptopNos.add(parseInt(numMatch[0], 10));
+          }
+        });
+        (appState.vpns || []).forEach(v => {
+          if (v.no) laptopNos.add(Number(v.no));
+        });
+        const maxNo = Math.max(10, ...Array.from(laptopNos));
+        for (let i = 1; i <= maxNo; i++) {
           const opt = document.createElement('option');
           opt.value = i;
           opt.textContent = `노트북 ${i}번`;
