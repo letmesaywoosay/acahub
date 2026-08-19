@@ -419,7 +419,7 @@ const academyData = {
     },
     {
       "no": 1,
-      "vpnId": "handson-1",
+      "vpnId": "노트북 1번",
       "userId": "user1",
       "bizCode": "USER01",
       "gitRepo": "EDU01",
@@ -429,7 +429,7 @@ const academyData = {
     },
     {
       "no": 2,
-      "vpnId": "handson-2",
+      "vpnId": "노트북 2번",
       "userId": "user2",
       "bizCode": "USER02",
       "gitRepo": "EDU02",
@@ -439,7 +439,7 @@ const academyData = {
     },
     {
       "no": 3,
-      "vpnId": "handson-3",
+      "vpnId": "노트북 3번",
       "userId": "user3",
       "bizCode": "USER03",
       "gitRepo": "EDU03",
@@ -449,7 +449,7 @@ const academyData = {
     },
     {
       "no": 4,
-      "vpnId": "handson-4",
+      "vpnId": "노트북 4번",
       "userId": "user4",
       "bizCode": "USER04",
       "gitRepo": "EDU04",
@@ -459,7 +459,7 @@ const academyData = {
     },
     {
       "no": 5,
-      "vpnId": "handson-5",
+      "vpnId": "노트북 5번",
       "userId": "user5",
       "bizCode": "USER05",
       "gitRepo": "EDU05",
@@ -469,7 +469,7 @@ const academyData = {
     },
     {
       "no": 6,
-      "vpnId": "handson-6",
+      "vpnId": "노트북 6번",
       "userId": "user6",
       "bizCode": "USER06",
       "gitRepo": "EDU06",
@@ -479,7 +479,7 @@ const academyData = {
     },
     {
       "no": 7,
-      "vpnId": "handson-7",
+      "vpnId": "노트북 7번",
       "userId": "user7",
       "bizCode": "USER07",
       "gitRepo": "EDU07",
@@ -489,7 +489,7 @@ const academyData = {
     },
     {
       "no": 8,
-      "vpnId": "handson-8",
+      "vpnId": "노트북 8번",
       "userId": "user8",
       "bizCode": "USER08",
       "gitRepo": "EDU08",
@@ -499,9 +499,9 @@ const academyData = {
     },
     {
       "no": 9,
-      "vpnId": "handson-9",
+      "vpnId": "노트북 9번",
       "userId": "user10",
-      "bizCode": "USER09",
+      "bizCode": "USER10",
       "gitRepo": "EDU10",
       "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31309/members",
@@ -509,13 +509,23 @@ const academyData = {
     },
     {
       "no": 10,
-      "vpnId": "handson-10",
+      "vpnId": "노트북 10번",
       "userId": "user11",
-      "bizCode": "USER10",
+      "bizCode": "USER11",
       "gitRepo": "EDU11",
       "gitRepoPw": "cloud1234",
       "stgUrl": "http://10.255.62.49:31320/members",
       "prdUrl": "http://10.255.62.49:31321/members"
+    },
+    {
+      "no": 11,
+      "vpnId": "노트북 11번",
+      "userId": "user12",
+      "bizCode": "USER12",
+      "gitRepo": "EDU12",
+      "gitRepoPw": "cloud1234",
+      "stgUrl": "",
+      "prdUrl": ""
     }
   ],
   "middlewares": [],

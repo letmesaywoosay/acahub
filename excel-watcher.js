@@ -241,12 +241,15 @@ function parseExcel(triggerPush = false) {
         const env = String(row[5] || "").trim();
         const url = String(row[6] || "").trim();
         
-        if (vpnId.startsWith("handson-") || vpnId === "강사") {
+        if (vpnId !== "" || userId !== "") {
           let no = 0;
-          if (vpnId === "강사") {
+          if (vpnId === "강사" || userId === "user00") {
             no = 0;
           } else {
-            no = parseInt(vpnId.replace("handson-", ""), 10);
+            const numMatch = vpnId.match(/\d+/) || userId.match(/\d+/);
+            if (numMatch) {
+              no = parseInt(numMatch[0], 10);
+            }
           }
           
           const nextRow = rows[idx + 1] || [];
