@@ -397,7 +397,7 @@ const academyData = {
     {
       "date": "2026-08-20",
       "name": "[고객사]TROMBONE 소개 및 기능 교육",
-      "url": ""
+      "url": "https://okekr-my.sharepoint.com/:f:/g/personal/ws_choi_okekr_onmicrosoft_com/IgB8nkzkDBddQrlOhYCI6LdoAVh3p5lvs4py_CDoApsayVI?e=XUSEl6"
     }
   ],
   "practiceMaterials": [
