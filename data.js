@@ -270,52 +270,52 @@ const academyData = {
     {
       "no": 1,
       "id": "rydbr2o26-1",
-      "pw": "EB7TPP7wSqpx"
+      "pw": "3W7ha1kmFO5R"
     },
     {
       "no": 2,
       "id": "rydbr2o26-2",
-      "pw": "nMBFCxkWVak3"
+      "pw": "lTBaTjDLflWa"
     },
     {
       "no": 3,
       "id": "rydbr2o26-3",
-      "pw": "z9rmYSbbkfvv"
+      "pw": "kg6gZ3Bt8A4B"
     },
     {
       "no": 4,
       "id": "rydbr2o26-4",
-      "pw": "Kb3cK2H1Fy97"
+      "pw": "WBWY7D7eEF1W"
     },
     {
       "no": 5,
       "id": "rydbr2o26-5",
-      "pw": "il1F98mduykO"
+      "pw": "uOzDBByIZZEt"
     },
     {
       "no": 6,
       "id": "rydbr2o26-6",
-      "pw": "0EpB9mbdEIQS"
+      "pw": "cW7ynDiNUZYT"
     },
     {
       "no": 7,
       "id": "rydbr2o26-7",
-      "pw": "91DDYymVM7jz"
+      "pw": "1phE1W3I2enW"
     },
     {
       "no": 8,
       "id": "rydbr2o26-8",
-      "pw": "Be6WoeM4w13H"
+      "pw": "NozFgNzQVS4o"
     },
     {
       "no": 9,
       "id": "rydbr2o26-9",
-      "pw": "D9C373lsNy6F"
+      "pw": "I49DUaV2anrD"
     },
     {
       "no": 10,
       "id": "rydbr2o26-10",
-      "pw": "vw1W7i48l47Y"
+      "pw": "RKcuymWLiT7B"
     },
     {
       "no": 11,
